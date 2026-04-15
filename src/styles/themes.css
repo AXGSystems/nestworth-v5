@@ -1,0 +1,316 @@
+/* ============================================================
+   NestWorth v5 — Theme System
+   5 themes using CSS custom properties with [data-theme] selectors.
+   Ported from the v4 prototype.
+   ============================================================ */
+
+/* === Emerald (default) === */
+:root,
+[data-theme="emerald"] {
+  --bg1: #f0f6ec;
+  --bg2: #e4eede;
+  --bg3: #d4e4d0;
+  --bgE: #fff;
+
+  --cardBg: rgba(255, 255, 255, 0.78);
+  --cardBgH: rgba(255, 255, 255, 0.92);
+  --cardBorder: rgba(255, 255, 255, 0.6);
+
+  --glassBg: rgba(248, 252, 242, 0.72);
+  --glassBlur: 20px;
+
+  --t1: rgba(26, 40, 24, 0.92);
+  --t2: rgba(26, 40, 24, 0.62);
+  --t3: rgba(26, 40, 24, 0.3);
+
+  --acc: #2a7050;
+  --accL: #349860;
+  --accS: rgba(42, 112, 80, 0.08);
+
+  --gold: #c8a848;
+  --goldG: linear-gradient(180deg, #dcc06e, #b89840);
+
+  --pos: #34c759;
+  --posBg: rgba(52, 199, 89, 0.1);
+  --neg: #ff3b30;
+  --negBg: rgba(255, 59, 48, 0.08);
+  --warn: #ff9f0a;
+  --warnBg: rgba(255, 159, 10, 0.1);
+
+  --sep: rgba(0, 0, 0, 0.06);
+  --overlay: rgba(8, 20, 10, 0.4);
+
+  --heroGrad: linear-gradient(
+    155deg,
+    rgba(20, 78, 48, 0.94),
+    rgba(38, 110, 65, 0.88) 25%,
+    rgba(58, 140, 88, 0.74) 50%,
+    rgba(88, 168, 115, 0.58) 75%,
+    rgba(120, 200, 150, 0.4)
+  );
+  --bodyGrad: linear-gradient(
+    172deg,
+    #1a5e3a 0%,
+    #3a9068 16%,
+    #6ac098 38%,
+    #a8dcc0 58%,
+    #d4eed8 78%,
+    #eef8ee 92%,
+    #f4faf2
+  );
+
+  --sh: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 1px rgba(0, 0, 0, 0.06);
+  --shM: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shL: 0 12px 40px rgba(0, 0, 0, 0.08);
+
+  --barBg: rgba(248, 252, 244, 0.92);
+  --barBorder: rgba(0, 0, 0, 0.04);
+
+  --heroTxt: #fff;
+  --stBarC: #fff;
+  --info: #208080;
+
+  --drawerBg: rgba(248, 252, 244, 0.97);
+  --sidebarBg: rgba(248, 252, 244, 0.95);
+}
+
+/* === Light === */
+[data-theme="light"] {
+  --bg1: #f2f2f7;
+  --bg2: #e5e5ea;
+  --bg3: #d1d1d6;
+  --bgE: #fff;
+
+  --cardBg: rgba(255, 255, 255, 0.8);
+  --cardBgH: rgba(255, 255, 255, 0.95);
+  --cardBorder: rgba(0, 0, 0, 0.04);
+
+  --glassBg: rgba(255, 255, 255, 0.72);
+  --glassBlur: 20px;
+
+  --t1: rgba(0, 0, 0, 0.87);
+  --t2: rgba(0, 0, 0, 0.58);
+  --t3: rgba(0, 0, 0, 0.25);
+
+  --acc: #007aff;
+  --accL: #409cff;
+  --accS: rgba(0, 122, 255, 0.08);
+
+  --gold: #af8700;
+  --goldG: linear-gradient(180deg, #c49b00, #8a6d00);
+
+  --pos: #34c759;
+  --posBg: rgba(52, 199, 89, 0.1);
+  --neg: #ff3b30;
+  --negBg: rgba(255, 59, 48, 0.08);
+  --warn: #ff9f0a;
+  --warnBg: rgba(255, 159, 10, 0.1);
+
+  --sep: rgba(0, 0, 0, 0.06);
+  --overlay: rgba(0, 0, 0, 0.3);
+
+  --heroGrad: linear-gradient(155deg, #007aff 0%, #409cff 50%, #80bfff);
+  --bodyGrad: linear-gradient(180deg, #f2f2f7, #fff);
+
+  --sh: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shM: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shL: 0 12px 40px rgba(0, 0, 0, 0.08);
+
+  --barBg: rgba(255, 255, 255, 0.92);
+  --barBorder: rgba(0, 0, 0, 0.06);
+
+  --heroTxt: #fff;
+  --stBarC: #000;
+  --info: #208080;
+
+  --drawerBg: rgba(255, 255, 255, 0.97);
+  --sidebarBg: rgba(255, 255, 255, 0.95);
+}
+
+/* === Dark === */
+[data-theme="dark"] {
+  --bg1: #000;
+  --bg2: #1c1c1e;
+  --bg3: #2c2c2e;
+  --bgE: #1c1c1e;
+
+  --cardBg: rgba(28, 28, 30, 0.8);
+  --cardBgH: rgba(44, 44, 46, 0.9);
+  --cardBorder: rgba(255, 255, 255, 0.06);
+
+  --glassBg: rgba(28, 28, 30, 0.72);
+  --glassBlur: 24px;
+
+  --t1: rgba(255, 255, 255, 0.92);
+  --t2: rgba(255, 255, 255, 0.58);
+  --t3: rgba(255, 255, 255, 0.25);
+
+  --acc: #0a84ff;
+  --accL: #409cff;
+  --accS: rgba(10, 132, 255, 0.12);
+
+  --gold: #ffd60a;
+  --goldG: linear-gradient(180deg, #ffd60a, #c8a800);
+
+  --pos: #30d158;
+  --posBg: rgba(48, 209, 88, 0.15);
+  --neg: #ff453a;
+  --negBg: rgba(255, 69, 58, 0.12);
+  --warn: #ffd60a;
+  --warnBg: rgba(255, 214, 10, 0.12);
+
+  --sep: rgba(255, 255, 255, 0.06);
+  --overlay: rgba(0, 0, 0, 0.5);
+
+  --heroGrad: linear-gradient(
+    155deg,
+    rgba(10, 132, 255, 0.3),
+    rgba(48, 209, 88, 0.2) 50%,
+    rgba(255, 214, 10, 0.15)
+  );
+  --bodyGrad: linear-gradient(180deg, #000, #0a0a0a);
+
+  --sh: 0 1px 4px rgba(0, 0, 0, 0.3);
+  --shM: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shL: 0 12px 40px rgba(0, 0, 0, 0.5);
+
+  --barBg: rgba(28, 28, 30, 0.92);
+  --barBorder: rgba(255, 255, 255, 0.06);
+
+  --heroTxt: #fff;
+  --stBarC: #fff;
+  --info: #40b4b4;
+
+  --drawerBg: rgba(28, 28, 30, 0.97);
+  --sidebarBg: rgba(28, 28, 30, 0.95);
+}
+
+/* === Midnight === */
+[data-theme="midnight"] {
+  --bg1: #0a0e1a;
+  --bg2: #111827;
+  --bg3: #1e2740;
+  --bgE: #151d30;
+
+  --cardBg: rgba(21, 29, 48, 0.8);
+  --cardBgH: rgba(30, 39, 64, 0.9);
+  --cardBorder: rgba(108, 143, 255, 0.08);
+
+  --glassBg: rgba(15, 23, 42, 0.75);
+  --glassBlur: 24px;
+
+  --t1: rgba(224, 231, 255, 0.95);
+  --t2: rgba(165, 180, 210, 0.68);
+  --t3: rgba(130, 150, 190, 0.35);
+
+  --acc: #6c8fff;
+  --accL: #8faaff;
+  --accS: rgba(108, 143, 255, 0.12);
+
+  --gold: #fbbf24;
+  --goldG: linear-gradient(180deg, #fbbf24, #d4960a);
+
+  --pos: #4ade80;
+  --posBg: rgba(74, 222, 128, 0.12);
+  --neg: #fb7185;
+  --negBg: rgba(251, 113, 133, 0.1);
+  --warn: #fbbf24;
+  --warnBg: rgba(251, 191, 36, 0.1);
+
+  --sep: rgba(108, 143, 255, 0.06);
+  --overlay: rgba(5, 8, 15, 0.6);
+
+  --heroGrad: linear-gradient(
+    155deg,
+    rgba(108, 143, 255, 0.25),
+    rgba(74, 222, 128, 0.15) 50%,
+    rgba(251, 191, 36, 0.1)
+  );
+  --bodyGrad: linear-gradient(180deg, #0a0e1a, #111827);
+
+  --sh: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shM: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shL: 0 12px 40px rgba(0, 0, 0, 0.6);
+
+  --barBg: rgba(15, 23, 42, 0.92);
+  --barBorder: rgba(108, 143, 255, 0.08);
+
+  --heroTxt: #e0e7ff;
+  --stBarC: #e0e7ff;
+  --info: #60c0c0;
+
+  --drawerBg: rgba(15, 23, 42, 0.97);
+  --sidebarBg: rgba(15, 23, 42, 0.95);
+}
+
+/* === Gold === */
+[data-theme="gold"] {
+  --bg1: #12100b;
+  --bg2: #1c1814;
+  --bg3: #2a241c;
+  --bgE: #1e1a14;
+
+  --cardBg: rgba(30, 26, 20, 0.82);
+  --cardBgH: rgba(42, 36, 28, 0.9);
+  --cardBorder: rgba(212, 168, 83, 0.08);
+
+  --glassBg: rgba(18, 16, 11, 0.78);
+  --glassBlur: 24px;
+
+  --t1: rgba(255, 245, 225, 0.95);
+  --t2: rgba(210, 190, 160, 0.68);
+  --t3: rgba(180, 155, 120, 0.35);
+
+  --acc: #d4a853;
+  --accL: #e0be72;
+  --accS: rgba(212, 168, 83, 0.1);
+
+  --gold: #d4a853;
+  --goldG: linear-gradient(180deg, #e0be72, #b89040);
+
+  --pos: #a3d977;
+  --posBg: rgba(163, 217, 119, 0.12);
+  --neg: #e87461;
+  --negBg: rgba(232, 116, 97, 0.1);
+  --warn: #e8c547;
+  --warnBg: rgba(232, 197, 71, 0.1);
+
+  --sep: rgba(212, 168, 83, 0.06);
+  --overlay: rgba(8, 7, 5, 0.6);
+
+  --heroGrad: linear-gradient(
+    155deg,
+    rgba(212, 168, 83, 0.3),
+    rgba(163, 217, 119, 0.15) 50%,
+    rgba(232, 116, 97, 0.1)
+  );
+  --bodyGrad: linear-gradient(180deg, #12100b, #1c1814);
+
+  --sh: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shM: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shL: 0 12px 40px rgba(0, 0, 0, 0.6);
+
+  --barBg: rgba(18, 16, 11, 0.92);
+  --barBorder: rgba(212, 168, 83, 0.08);
+
+  --heroTxt: #fff5e0;
+  --stBarC: #fff5e0;
+  --info: #50b0a0;
+
+  --drawerBg: rgba(18, 16, 11, 0.97);
+  --sidebarBg: rgba(18, 16, 11, 0.95);
+}
+
+/* === Timing Variables === */
+:root {
+  --spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --springB: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --easeOut: cubic-bezier(0, 0, 0.58, 1);
+  --easeIn: cubic-bezier(0.42, 0, 1, 1);
+  --modalIn: cubic-bezier(0.32, 0.72, 0, 1);
+  --modalOut: cubic-bezier(0.32, 0, 0.67, 0);
+  --fast: 0.18s;
+  --norm: 0.3s;
+  --mod: 0.4s;
+  --slow: 0.5s;
+}

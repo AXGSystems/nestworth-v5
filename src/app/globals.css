@@ -1,26 +1,540 @@
+/* NestWorth v5 — Global Styles */
 @import "tailwindcss";
+@import "../styles/themes.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   Base Reset & Typography
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", "Inter", system-ui, sans-serif;
+  background: var(--bodyGrad);
+  color: var(--t1);
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: color 0.3s ease;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  color: var(--t1);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--t3);
+}
+
+/* Thin scrollbar */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--t3);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   Animation Keyframes
+   ============================================================ */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   Glassmorphic Card System
+   ============================================================ */
+
+.nw-card {
+  background: var(--cardBg);
+  backdrop-filter: blur(var(--glassBlur));
+  -webkit-backdrop-filter: blur(var(--glassBlur));
+  border: 0.5px solid var(--cardBorder);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--sh);
+  contain: content;
+  transition:
+    transform var(--fast) var(--spring),
+    box-shadow var(--fast) ease,
+    background var(--fast) ease;
+}
+
+.nw-card:active {
+  transform: scale(0.98);
+  box-shadow: none;
+  transition-duration: 0.08s;
+}
+
+.nw-card-tap {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nw-card-tap:hover {
+  background: var(--cardBgH);
+  box-shadow: var(--shM);
+}
+
+.nw-card-tap:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+  border-radius: 16px;
+}
+
+.nw-card-accent {
+  border-top: 2px solid var(--acc);
+}
+
+.nw-card-inner {
+  background: var(--accS);
+  border: 0.5px solid var(--cardBorder);
+  border-radius: 12px;
+  padding: 10px;
+  transition: transform var(--fast) var(--spring);
+}
+
+/* ============================================================
+   Hero Section
+   ============================================================ */
+
+.nw-hero {
+  background: var(--heroGrad);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  color: var(--heroTxt);
+  padding: 20px 18px;
+  margin-bottom: 10px;
+  z-index: 1;
+  box-shadow: var(--shL);
+}
+
+.nw-hero::before {
+  content: "";
+  position: absolute;
+  top: -25px;
+  right: -15px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.06),
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ============================================================
+   Button System
+   ============================================================ */
+
+.nw-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+  padding: 0 24px;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  background: var(--acc);
+  color: #fff;
+  border: none;
+  transition:
+    transform var(--fast) var(--spring),
+    filter var(--fast) ease;
+  box-shadow: var(--shM);
+  user-select: none;
+}
+
+.nw-btn:hover {
+  filter: brightness(1.08);
+}
+.nw-btn:active {
+  transform: scale(0.96);
+  filter: brightness(0.92);
+  transition-duration: 0.08s;
+}
+
+.nw-btn-gold {
+  background: var(--goldG);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 22px;
+  padding: 10px 20px;
+  font-size: 13px;
+  height: auto;
+  box-shadow: 0 4px 16px rgba(200, 168, 72, 0.25);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nw-btn-pill {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 17px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--accS);
+  color: var(--acc);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nw-btn-pill:active {
+  transform: scale(0.94);
+}
+
+.nw-btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--sep);
+  color: var(--t2);
+  font-weight: 600;
+  border-radius: 14px;
+  padding: 12px;
+  font-size: 13px;
+  transition:
+    transform var(--fast) var(--spring),
+    background var(--fast) ease;
+}
+
+.nw-btn-outline:hover {
+  background: var(--accS);
+}
+.nw-btn-outline:active {
+  transform: scale(0.96);
+  transition-duration: 0.08s;
+}
+
+.nw-btn-danger {
+  background: var(--negBg);
+  color: var(--neg);
+  border: 1px solid rgba(255, 59, 48, 0.12);
+  transition: transform var(--fast) var(--spring);
+}
+
+.nw-btn-danger:active {
+  transform: scale(0.96);
+  transition-duration: 0.08s;
+}
+
+.nw-btn-full {
+  width: 100%;
+  display: flex;
+}
+
+/* ============================================================
+   Toggle Switch (iOS style)
+   ============================================================ */
+
+.nw-toggle {
+  width: 51px;
+  height: 31px;
+  border-radius: 15.5px;
+  position: relative;
+  transition: background var(--fast) ease;
+  flex-shrink: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nw-toggle-thumb {
+  width: 27px;
+  height: 27px;
+  border-radius: 13.5px;
+  background: #fff;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: transform var(--fast) var(--springB);
+}
+
+.nw-toggle.on {
+  background: var(--pos);
+}
+.nw-toggle.off {
+  background: var(--t3);
+}
+.nw-toggle.on .nw-toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* ============================================================
+   Layout Helpers
+   ============================================================ */
+
+.nw-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.nw-separator {
+  height: 0.5px;
+  background: var(--sep);
+  margin: 0 -16px;
+}
+
+.nw-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nw-section-header {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: var(--t1);
+  margin-bottom: 12px;
+}
+
+.nw-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--t2);
+}
+
+/* ============================================================
+   Progress Bar
+   ============================================================ */
+
+.nw-bar-track {
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.nw-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition:
+    width 0.6s var(--spring),
+    transform 0.6s var(--spring);
+}
+
+/* ============================================================
+   Content Fade (navigation transition)
+   ============================================================ */
+
+.nw-content-fade {
+  animation: fadeUp 0.3s var(--spring) both;
+}
+
+.nw-fading {
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+/* ============================================================
+   Shimmer / Loading skeleton
+   ============================================================ */
+
+.nw-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--sep) 25%,
+    var(--cardBgH) 50%,
+    var(--sep) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease infinite;
+  border-radius: 8px;
+}
+
+/* ============================================================
+   Bottom Sheet / Overlay
+   ============================================================ */
+
+.nw-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--norm) ease;
+}
+
+.nw-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================================
+   Print Styles
+   ============================================================ */
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .nw-card,
+  .nw-card-tap,
+  .nw-hero {
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .nw-hero {
+    color: #000 !important;
+  }
+
+  /* Hide interactive elements */
+  button,
+  .nw-toggle,
+  .nw-btn,
+  .nw-btn-gold,
+  .nw-btn-pill,
+  .nw-btn-outline,
+  .nw-btn-danger,
+  nav,
+  .nw-overlay {
+    display: none !important;
+  }
+
+  /* Ensure text is visible */
+  * {
+    color: #000 !important;
+    text-shadow: none !important;
+  }
+
+  .nw-badge {
+    border: 1px solid #ccc;
+    background: #f5f5f5 !important;
+  }
+
+  .nw-bar-fill {
+    background: #333 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .nw-sub {
+    color: #666 !important;
+  }
 }
