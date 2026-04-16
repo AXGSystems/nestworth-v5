@@ -9,6 +9,7 @@ import type {
   FeatureRequest,
   BugReport,
   ThemeName,
+  TabName,
 } from './types';
 import { VALID_THEMES } from './types';
 import { hasPrototypePollution } from './utils';
@@ -153,7 +154,7 @@ function loadCreditScoreHistory(): CreditScore[] {
         if (!h || typeof h !== 'object' || Array.isArray(h)) return false;
         const obj = h as Record<string, unknown>;
         if (typeof obj.score !== 'number' || obj.score < 300 || obj.score > 850) return false;
-        if (obj.date !== undefined && typeof obj.date !== 'string') return false;
+        if (typeof obj.date !== 'string') return false;
         if (obj.source !== undefined && typeof obj.source !== 'string') return false;
         return true;
       });
@@ -209,7 +210,7 @@ function loadBugReports(): BugReport[] {
 
 interface NestWorthState {
   // Navigation
-  currentTab: string;
+  currentTab: TabName;
   currentPage: string | null;
   drawerOpen: boolean;
   sheetOpen: boolean;
@@ -228,7 +229,7 @@ interface NestWorthState {
   bugReports: BugReport[];
 
   // Actions — Navigation
-  setTab: (tab: string) => void;
+  setTab: (tab: TabName) => void;
   setPage: (page: string | null) => void;
   toggleDrawer: () => void;
   openSheet: (title: string, content: React.ReactNode) => void;
@@ -292,7 +293,9 @@ export const useNestWorthStore = create<NestWorthState>()((set) => ({
     try {
       localStorage.setItem('nw-theme', theme);
     } catch { /* noop */ }
-    document.documentElement.setAttribute('data-theme', theme);
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
     set({ theme });
   },
 
@@ -319,33 +322,51 @@ export const useNestWorthStore = create<NestWorthState>()((set) => ({
     set({ adPrefs: prefs });
   },
 
-  // Actions — User data
-  addCreditScore: (score) =>
+  // Actions — User data (with input validation)
+  addCreditScore: (score) => {
+    // Validate score before persisting
+    if (typeof score.score !== 'number' || score.score < 300 || score.score > 850) return;
+    if (typeof score.date !== 'string' || score.date.length > 50) return;
+    if (score.source !== undefined && (typeof score.source !== 'string' || score.source.length > 100)) return;
+
     set((state) => {
       const next = [score, ...state.creditScoreHistory].slice(0, 200);
       try {
         localStorage.setItem('nw-credit-history', JSON.stringify(next));
       } catch { /* noop */ }
       return { creditScoreHistory: next };
-    }),
+    });
+  },
 
-  addFeatureRequest: (request) =>
+  addFeatureRequest: (request) => {
+    // Validate request before persisting
+    if (typeof request.title !== 'string' || request.title.length === 0 || request.title.length > 200) return;
+    if (request.description !== undefined && (typeof request.description !== 'string' || request.description.length > 2000)) return;
+    const validPriorities = ['low', 'medium', 'high', 'critical'];
+    if (request.priority && !validPriorities.includes(request.priority)) return;
+
     set((state) => {
       const next = [...state.featureRequests, request].slice(0, 100);
       try {
         localStorage.setItem('nw-feature-requests', JSON.stringify(next));
       } catch { /* noop */ }
       return { featureRequests: next };
-    }),
+    });
+  },
 
-  addBugReport: (report) =>
+  addBugReport: (report) => {
+    // Validate report before persisting
+    if (typeof report.title !== 'string' || report.title.length === 0 || report.title.length > 200) return;
+    if (report.description !== undefined && (typeof report.description !== 'string' || report.description.length > 2000)) return;
+
     set((state) => {
       const next = [...state.bugReports, report].slice(0, 100);
       try {
         localStorage.setItem('nw-bug-reports', JSON.stringify(next));
       } catch { /* noop */ }
       return { bugReports: next };
-    }),
+    });
+  },
 }));
 
 /**

@@ -6,12 +6,14 @@ interface ProgressBarProps {
   percent: number;
   color?: string;
   height?: number;
+  label?: string;
 }
 
 export default function ProgressBar({
   percent,
   color = 'var(--acc)',
   height = 6,
+  label,
 }: ProgressBarProps) {
   const clamped = Math.max(0, Math.min(100, percent));
 
@@ -22,6 +24,7 @@ export default function ProgressBar({
       aria-valuenow={clamped}
       aria-valuemin={0}
       aria-valuemax={100}
+      aria-label={label ?? `${clamped}% complete`}
       style={{ height: `${height}px` }}
     >
       <div

@@ -12,6 +12,7 @@ interface Column<T> {
 interface DataTableProps<T> {
   columns: Column<T>[];
   data: T[];
+  rowKey?: keyof T;
   onRowClick?: (row: T) => void;
 }
 
@@ -24,6 +25,7 @@ const alignClass: Record<string, string> = {
 export default function DataTable<T extends Record<string, unknown>>({
   columns,
   data,
+  rowKey,
   onRowClick,
 }: DataTableProps<T>) {
   const interactive = !!onRowClick;
@@ -48,7 +50,7 @@ export default function DataTable<T extends Record<string, unknown>>({
         <tbody>
           {data.map((row, idx) => (
             <tr
-              key={idx}
+              key={rowKey ? String(row[rowKey]) : idx}
               onClick={interactive ? () => onRowClick(row) : undefined}
               tabIndex={interactive ? 0 : undefined}
               onKeyDown={

@@ -143,6 +143,16 @@ export default function Drawer() {
     return () => document.removeEventListener('keydown', handler);
   }, [drawerOpen, toggleDrawer]);
 
+  /* Move focus into drawer on open */
+  useEffect(() => {
+    if (drawerOpen) {
+      requestAnimationFrame(() => {
+        const close = drawerRef.current?.querySelector<HTMLElement>('button[aria-label="Close navigation"]');
+        close?.focus();
+      });
+    }
+  }, [drawerOpen]);
+
   /* Prevent body scroll */
   useEffect(() => {
     if (drawerOpen) {

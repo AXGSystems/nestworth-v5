@@ -23,9 +23,9 @@ export default function LineChart({
   const uid = useId();
   const gradId = `lg-${uid.replace(/:/g, '')}`;
 
-  const { points, pathD, areaD, gridLines, labels, min, range } =
+  const { points, pathD, areaD, gridLines, labels } =
     useMemo(() => {
-      if (!data.length) return { points: [], pathD: '', areaD: '', gridLines: [], labels: [], min: 0, range: 1 };
+      if (!data.length) return { points: [], pathD: '', areaD: '', gridLines: [], labels: [] };
       const cw = W - PAD.l - PAD.r;
       const ch = height - PAD.t - PAD.b;
       const vals = data.map((d) => d.value);
@@ -50,7 +50,7 @@ export default function LineChart({
         text: d.label,
       }));
 
-      return { points: pts, pathD: pd, areaD: ad, gridLines: grids, labels: lbls, min: mn, range: rng };
+      return { points: pts, pathD: pd, areaD: ad, gridLines: grids, labels: lbls };
     }, [data, height]);
 
   if (!data.length) return null;

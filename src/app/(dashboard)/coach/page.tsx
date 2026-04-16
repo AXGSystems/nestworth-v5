@@ -11,7 +11,10 @@ import {
 } from '@/lib/data';
 
 /* ---- Chat message type ---- */
+let chatMsgId = 0;
+
 interface ChatMessage {
+  id: number;
   role: 'user' | 'coach';
   text: string;
   time: string;
@@ -45,6 +48,7 @@ function getTimestamp(): string {
 export default function CoachPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
+      id: ++chatMsgId,
       role: 'coach',
       text: 'Hey Von! I\'m your NestWorth Coach. I can help with spending analysis, bill savings, forecast projections, and more. What would you like to know?',
       time: getTimestamp(),
@@ -64,6 +68,7 @@ export default function CoachPage() {
       if (!text.trim()) return;
 
       const userMsg: ChatMessage = {
+        id: ++chatMsgId,
         role: 'user',
         text: text.trim(),
         time: getTimestamp(),
@@ -78,6 +83,7 @@ export default function CoachPage() {
         : 'I can help with Spending, Sync, Bills, Save, Audit, Forecast, and Budget. Try asking about one of those topics!';
 
       const coachMsg: ChatMessage = {
+        id: ++chatMsgId,
         role: 'coach',
         text: response,
         time: getTimestamp(),
@@ -120,9 +126,9 @@ export default function CoachPage() {
             </svg>
           </div>
           <div>
-            <p className="text-lg font-black tracking-tight">
+            <h1 className="text-lg font-black tracking-tight">
               NestWorth Coach
-            </p>
+            </h1>
             <p className="text-xs opacity-80">
               AI-powered financial insights for your household
             </p>
@@ -151,9 +157,9 @@ export default function CoachPage() {
           {/* Chat messages */}
           <Card className="min-h-[400px] max-h-[60vh] overflow-y-auto !p-3">
             <div className="space-y-3">
-              {messages.map((msg, i) => (
+              {messages.map((msg) => (
                 <div
-                  key={i}
+                  key={msg.id}
                   className={`flex gap-2.5 ${
                     msg.role === 'user' ? 'flex-row-reverse' : ''
                   }`}
@@ -207,15 +213,18 @@ export default function CoachPage() {
             <input
               type="text"
               placeholder="Ask your coach anything..."
+              aria-label="Ask your coach a question"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
+              maxLength={500}
               className="flex-1 px-4 py-3 bg-[var(--cardBg)] border border-[var(--cardBorder)] rounded-xl text-sm text-[var(--t1)] placeholder:text-[var(--t3)] outline-none focus:border-[var(--acc)] transition-colors"
             />
             <button
               type="button"
               onClick={() => handleSend(input)}
               disabled={!input.trim()}
+              aria-label="Send message"
               className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl bg-[var(--acc)] text-white disabled:opacity-40 hover:brightness-110 active:scale-95 transition-all duration-150"
             >
               <svg

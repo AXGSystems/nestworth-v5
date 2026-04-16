@@ -74,9 +74,9 @@ export default function MoneyPage() {
         <p className="text-xs font-semibold opacity-80 mb-0.5">
           Total Assets
         </p>
-        <p className="text-3xl font-black tracking-tight">
+        <h1 className="text-3xl font-black tracking-tight">
           {formatCurrency(totalAssets)}
-        </p>
+        </h1>
         <div className="flex items-center gap-4 mt-2 text-xs font-semibold opacity-80">
           <span>
             Liabilities: {formatCurrency(totalLiabilities)}
@@ -139,7 +139,7 @@ export default function MoneyPage() {
       {activeTab === 'accounts' && (
         <div className="space-y-2.5">
           {accounts.map((acc) => (
-            <Card key={acc.name} onClick={() => {}}>
+            <Card key={acc.name}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <StatusDot status={acc.status} />
@@ -195,8 +195,10 @@ export default function MoneyPage() {
             <input
               type="text"
               placeholder="Search transactions..."
+              aria-label="Search transactions"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              maxLength={200}
               className="w-full pl-10 pr-4 py-2.5 bg-[var(--cardBg)] border border-[var(--cardBorder)] rounded-xl text-sm text-[var(--t1)] placeholder:text-[var(--t3)] outline-none focus:border-[var(--acc)] transition-colors"
             />
           </div>
@@ -204,9 +206,9 @@ export default function MoneyPage() {
           {/* Transaction list */}
           <Card>
             <div className="space-y-0">
-              {filteredTx.map((tx, i) => (
+              {filteredTx.map((tx) => (
                 <div
-                  key={i}
+                  key={`${tx.who}-${tx.name}-${tx.date}`}
                   className="flex items-center gap-3 py-2.5 border-b border-[var(--sep)] last:border-b-0"
                 >
                   <Avatar
@@ -252,7 +254,7 @@ export default function MoneyPage() {
       {activeTab === 'bills' && (
         <div className="space-y-2.5">
           {bills.map((bill) => (
-            <Card key={bill.name} onClick={() => {}}>
+            <Card key={bill.name}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
@@ -297,7 +299,7 @@ export default function MoneyPage() {
       {activeTab === 'subscriptions' && (
         <div className="space-y-2.5">
           {subscriptions.map((sub) => (
-            <Card key={sub.name} onClick={() => {}}>
+            <Card key={sub.name}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-lg bg-[var(--accS)] flex items-center justify-center">

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, StatCard, Avatar, Badge } from '@/components/ui';
 import { Sparkline, DonutChart, AreaChart } from '@/components/charts';
 import {
@@ -12,6 +13,7 @@ import {
   monthlySpending,
 } from '@/lib/data';
 import { formatCurrency, trendIndicator } from '@/lib/utils';
+import { useNestWorthStore } from '@/lib/store';
 
 /* ---- Derived data ---- */
 const currentNW = nwHistory[nwHistory.length - 1].v;
@@ -45,6 +47,9 @@ const whoColor: Record<string, string> = {
 };
 
 export default function HomePage() {
+  const router = useRouter();
+  const setPage = useNestWorthStore((s) => s.setPage);
+
   return (
     <div className="space-y-4">
       {/* ---- Hero ---- */}
@@ -54,9 +59,9 @@ export default function HomePage() {
             <p className="text-xs font-semibold opacity-80 mb-0.5">
               Household Net Worth
             </p>
-            <p className="text-3xl font-black tracking-tight">
+            <h1 className="text-3xl font-black tracking-tight">
               {formatCurrency(currentNW)}
-            </p>
+            </h1>
           </div>
           <div className="w-[80px]">
             <Sparkline data={sparkData} color="rgba(255,255,255,0.85)" />
@@ -116,12 +121,12 @@ export default function HomePage() {
       {/* ---- Quick links ---- */}
       <div className="grid grid-cols-4 gap-2">
         {[
-          { label: 'ChargeIQ', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
-          { label: 'Bills', icon: 'M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z M16 2v4 M8 2v4 M3 10h18' },
-          { label: 'Goals', icon: 'M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h6v2h4v-3.5c2-1.5 2-2.7 2-4.5 0-2.5-1-4-4-5z' },
-          { label: 'Coach', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
+          { label: 'ChargeIQ', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z', action: () => setPage('chargeiq') },
+          { label: 'Bills', icon: 'M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z M16 2v4 M8 2v4 M3 10h18', action: () => setPage('bills') },
+          { label: 'Goals', icon: 'M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h6v2h4v-3.5c2-1.5 2-2.7 2-4.5 0-2.5-1-4-4-5z', action: () => router.push('/save') },
+          { label: 'Coach', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', action: () => router.push('/coach') },
         ].map((q) => (
-          <Card key={q.label} onClick={() => {}}>
+          <Card key={q.label} onClick={q.action}>
             <div className="flex flex-col items-center gap-1 py-1">
               <svg
                 width={20}
@@ -167,9 +172,9 @@ export default function HomePage() {
               Recent Transactions
             </p>
             <div className="space-y-0">
-              {transactions.slice(0, 8).map((tx, i) => (
+              {transactions.slice(0, 8).map((tx) => (
                 <div
-                  key={i}
+                  key={`${tx.who}-${tx.name}-${tx.date}`}
                   className="flex items-center gap-3 py-2.5 border-b border-[var(--sep)] last:border-b-0"
                 >
                   <Avatar
@@ -226,9 +231,9 @@ export default function HomePage() {
               Achievements
             </p>
             <div className="space-y-2">
-              {achievements.slice(0, 6).map((ach, i) => (
+              {achievements.slice(0, 6).map((ach) => (
                 <div
-                  key={i}
+                  key={ach.name}
                   className="flex items-center gap-2.5 py-1.5"
                 >
                   <div
@@ -281,7 +286,7 @@ export default function HomePage() {
             <div className="space-y-0">
               {topMerchants.slice(0, 6).map((m, i) => (
                 <div
-                  key={i}
+                  key={m.n}
                   className="flex items-center justify-between py-2 border-b border-[var(--sep)] last:border-b-0"
                 >
                   <div className="flex items-center gap-2">

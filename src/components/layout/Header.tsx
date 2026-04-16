@@ -1,12 +1,25 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNestWorthStore } from '@/lib/store';
 import { Avatar } from '@/components/ui';
 
 export default function Header() {
   const toggleDrawer = useNestWorthStore((s) => s.toggleDrawer);
   const openSheet = useNestWorthStore((s) => s.openSheet);
+
+  // Avoid hydration mismatch: render date only after mount
+  const [dateStr, setDateStr] = useState('');
+  useEffect(() => {
+    setDateStr(
+      new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      }),
+    );
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-4 bg-[var(--barBg)] backdrop-blur-xl border-b border-[var(--barBorder)]">
@@ -42,12 +55,7 @@ export default function Header() {
 
       {/* Center: date */}
       <p className="hidden sm:block text-xs font-semibold text-[var(--t2)]">
-        {new Date().toLocaleDateString('en-US', {
-          weekday: 'long',
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-        })}
+        {dateStr}
       </p>
 
       {/* Right: avatars + actions */}

@@ -41,21 +41,6 @@ export function formatPercent(value: number): string {
 }
 
 /**
- * XSS prevention — escape HTML entities in a string.
- * Replaces &, <, >, ", and ' with their HTML entity equivalents.
- */
-export function esc(s: string): string {
-  const map: Record<string, string> = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-  };
-  return s.replace(/[&<>"']/g, (ch) => map[ch] ?? ch);
-}
-
-/**
  * Bounds-checked parseInt. Returns fallback if value is invalid,
  * out of range, or not finite.
  */

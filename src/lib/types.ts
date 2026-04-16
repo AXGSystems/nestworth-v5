@@ -4,7 +4,7 @@ export type ThemeName = 'emerald' | 'light' | 'dark' | 'midnight' | 'gold';
 
 export const VALID_THEMES: ThemeName[] = ['emerald', 'light', 'dark', 'midnight', 'gold'];
 
-export const TABS = ['home', 'budget', 'goals', 'track', 'coach'] as const;
+export const TABS = ['home', 'spend', 'save', 'money', 'coach'] as const;
 export type TabName = (typeof TABS)[number];
 
 // --- Navigation ---
