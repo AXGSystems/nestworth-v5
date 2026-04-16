@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from 'react';
 import { Card, StatCard, Badge, Avatar } from '@/components/ui';
 import { accounts, transactions, bills, subscriptions } from '@/lib/data';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, formatCurrencyExact } from '@/lib/utils';
 
 /* ---- Derived data ---- */
 const totalAssets = accounts
@@ -56,7 +56,7 @@ export default function MoneyPage() {
       (tx) =>
         tx.name.toLowerCase().includes(q) ||
         tx.category.toLowerCase().includes(q) ||
-        tx.amount.toLowerCase().includes(q),
+        String(tx.amount).includes(q),
     );
   }, [searchTerm]);
 
@@ -231,12 +231,12 @@ export default function MoneyPage() {
                   </div>
                   <span
                     className={`text-sm font-bold font-[tabular-nums] ${
-                      tx.amount.startsWith('+')
+                      tx.amount > 0
                         ? 'text-[var(--pos)]'
                         : 'text-[var(--t1)]'
                     }`}
                   >
-                    {tx.amount}
+                    {tx.amount > 0 ? '+' : '-'}{formatCurrencyExact(Math.abs(tx.amount))}
                   </span>
                 </div>
               ))}

@@ -30,7 +30,11 @@ export default function Sparkline({
       .join(' ');
   }, [data, width, height]);
 
-  if (!data.length) return null;
+  if (!data.length) return (
+    <div className="flex items-center justify-center h-5 text-[var(--t3)] text-[10px]">
+      --
+    </div>
+  );
 
   return (
     <svg

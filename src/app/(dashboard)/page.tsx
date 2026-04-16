@@ -11,20 +11,33 @@ import {
   transactions,
   achievements,
   monthlySpending,
+  budgetCategories,
+  savingsRateHistory,
 } from '@/lib/data';
-import { formatCurrency, trendIndicator } from '@/lib/utils';
+import { formatCurrency, formatCurrencyExact, trendIndicator } from '@/lib/utils';
 import { useNestWorthStore } from '@/lib/store';
 
-/* ---- Derived data ---- */
+/* ---- Derived / computed data (Issue 11) ---- */
 const currentNW = nwHistory[nwHistory.length - 1].v;
 const prevNW = nwHistory[nwHistory.length - 2].v;
 const nwTrend = trendIndicator(currentNW, prevNW);
 const sparkData = nwHistory.map((p) => p.v);
 
-const latestSpend = monthlySpending[monthlySpending.length - 1];
-const totalSpent = latestSpend.g + latestSpend.d + latestSpend.s + latestSpend.e + latestSpend.t;
+/* Compute stats from data instead of hardcoding */
+const totalAllocated = budgetCategories.reduce((a, c) => a + c.allocated, 0);
+const totalSpent = budgetCategories.reduce((a, c) => a + c.spent, 0);
+const flexBudget = totalAllocated - totalSpent;
+const daysRemaining = 12; // days left in April
+const dailySafe = Math.round(flexBudget / daysRemaining);
+
+const latestCF = cashFlow[cashFlow.length - 1];
+const savingsRate = savingsRateHistory[savingsRateHistory.length - 1].r;
+const prevSavingsRate = savingsRateHistory[savingsRateHistory.length - 2].r;
 
 const completedAch = achievements.filter((a) => a.done).length;
+
+const latestSpend = monthlySpending[monthlySpending.length - 1];
+const monthlyTotal = latestSpend.g + latestSpend.d + latestSpend.s + latestSpend.e + latestSpend.t;
 
 /* Spending by category donut */
 const spendingSegments = [
@@ -90,25 +103,25 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ---- Stat cards row ---- */}
+      {/* ---- Stat cards row (computed from data) ---- */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
         <StatCard
           label="Flex Budget"
-          value="$1,680"
-          change="63% used"
+          value={formatCurrency(flexBudget)}
+          change={`${Math.round((totalSpent / totalAllocated) * 100)}% used`}
           trend="flat"
         />
         <StatCard
           label="Spending"
-          value={formatCurrency(totalSpent)}
-          change="$480 groceries"
+          value={formatCurrency(monthlyTotal)}
+          change={`$${dailySafe}/day safe`}
           trend="down"
         />
         <StatCard
           label="Savings Rate"
-          value="39%"
-          change="+1% vs last mo"
-          trend="up"
+          value={`${savingsRate}%`}
+          change={`${savingsRate > prevSavingsRate ? '+' : ''}${savingsRate - prevSavingsRate}% vs last mo`}
+          trend={savingsRate >= prevSavingsRate ? 'up' : 'down'}
         />
         <StatCard
           label="Wellness"
@@ -121,7 +134,7 @@ export default function HomePage() {
       {/* ---- Quick links ---- */}
       <div className="grid grid-cols-4 gap-2">
         {[
-          { label: 'ChargeIQ', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z', action: () => setPage('chargeiq') },
+          { label: 'ChargeIQ', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z', action: () => router.push('/chargeiq') },
           { label: 'Bills', icon: 'M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z M16 2v4 M8 2v4 M3 10h18', action: () => setPage('bills') },
           { label: 'Goals', icon: 'M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h6v2h4v-3.5c2-1.5 2-2.7 2-4.5 0-2.5-1-4-4-5z', action: () => router.push('/save') },
           { label: 'Coach', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', action: () => router.push('/coach') },
@@ -160,8 +173,8 @@ export default function HomePage() {
             </p>
             <DonutChart
               segments={spendingSegments}
-              centerText={formatCurrency(totalSpent)}
-              centerSub="of $4,600"
+              centerText={formatCurrency(monthlyTotal)}
+              centerSub={`of ${formatCurrency(totalAllocated)}`}
               size={160}
             />
           </Card>
@@ -197,12 +210,12 @@ export default function HomePage() {
                   </div>
                   <span
                     className={`text-sm font-bold font-[tabular-nums] ${
-                      tx.amount.startsWith('+')
+                      tx.amount > 0
                         ? 'text-[var(--pos)]'
                         : 'text-[var(--t1)]'
                     }`}
                   >
-                    {tx.amount}
+                    {tx.amount > 0 ? '+' : '-'}{formatCurrencyExact(Math.abs(tx.amount))}
                   </span>
                 </div>
               ))}

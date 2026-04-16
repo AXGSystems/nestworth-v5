@@ -112,22 +112,22 @@ export const actualSavings: ActualSavingsPoint[] = [
 
 // --- Transactions (16+) ---
 export const transactions: Transaction[] = [
-  { who: 'V', name: 'Whole Foods', category: 'Groceries', amount: '-$67.43', date: 'Today' },
-  { who: 'C', name: 'TreatYoSelf', category: 'Clothing', amount: '-$650.00', date: 'Yesterday', flagged: true },
-  { who: 'V', name: 'Shell Gas', category: 'Transport', amount: '-$48.20', date: 'Yesterday' },
-  { who: 'J', name: 'Mortgage', category: 'Housing', amount: '-$2,000', date: 'Friday' },
-  { who: 'C', name: 'Target Refund', category: 'Refund', amount: '+$84.50', date: 'Apr 10', refund: true },
-  { who: 'V', name: 'Netflix', category: 'Subscriptions', amount: '-$15.49', date: 'Apr 10' },
-  { who: 'C', name: 'Amazon', category: 'Shopping', amount: '-$150.00', date: 'Apr 10' },
-  { who: 'V', name: 'ALTA Payroll', category: 'Income', amount: '+$4,280', date: 'Apr 11', income: true },
-  { who: 'V', name: 'Costco', category: 'Groceries', amount: '-$124.30', date: 'Apr 8' },
-  { who: 'C', name: 'Starbucks', category: 'Dining', amount: '-$6.75', date: 'Apr 8' },
-  { who: 'V', name: 'Trader Joe\'s', category: 'Groceries', amount: '-$42.50', date: 'Apr 7' },
-  { who: 'C', name: 'Uber Eats', category: 'Dining', amount: '-$32.00', date: 'Apr 7' },
-  { who: 'J', name: 'Insurance', category: 'Insurance', amount: '-$184.00', date: 'Apr 5' },
-  { who: 'V', name: 'CVS Pharmacy', category: 'Health', amount: '-$27.50', date: 'Apr 4' },
-  { who: 'C', name: 'Caroline Freelance', category: 'Income', amount: '+$2,800', date: 'Apr 1', income: true },
-  { who: 'V', name: 'Gym', category: 'Fitness', amount: '-$50.00', date: 'Apr 1' },
+  { who: 'V', name: 'Whole Foods', category: 'Groceries', amount: -67.43, date: 'Today' },
+  { who: 'C', name: 'TreatYoSelf', category: 'Clothing', amount: -650.00, date: 'Yesterday', flagged: true },
+  { who: 'V', name: 'Shell Gas', category: 'Transport', amount: -48.20, date: 'Yesterday' },
+  { who: 'J', name: 'Mortgage', category: 'Housing', amount: -2000, date: 'Friday' },
+  { who: 'C', name: 'Target Refund', category: 'Refund', amount: 84.50, date: 'Apr 10', refund: true },
+  { who: 'V', name: 'Netflix', category: 'Subscriptions', amount: -15.49, date: 'Apr 10' },
+  { who: 'C', name: 'Amazon', category: 'Shopping', amount: -150.00, date: 'Apr 10' },
+  { who: 'V', name: 'ALTA Payroll', category: 'Income', amount: 4280, date: 'Apr 11', income: true },
+  { who: 'V', name: 'Costco', category: 'Groceries', amount: -124.30, date: 'Apr 8' },
+  { who: 'C', name: 'Starbucks', category: 'Dining', amount: -6.75, date: 'Apr 8' },
+  { who: 'V', name: 'Trader Joe\'s', category: 'Groceries', amount: -42.50, date: 'Apr 7' },
+  { who: 'C', name: 'Uber Eats', category: 'Dining', amount: -32.00, date: 'Apr 7' },
+  { who: 'J', name: 'Insurance', category: 'Insurance', amount: -184.00, date: 'Apr 5' },
+  { who: 'V', name: 'CVS Pharmacy', category: 'Health', amount: -27.50, date: 'Apr 4' },
+  { who: 'C', name: 'Caroline Freelance', category: 'Income', amount: 2800, date: 'Apr 1', income: true },
+  { who: 'V', name: 'Gym', category: 'Fitness', amount: -50.00, date: 'Apr 1' },
 ];
 
 // --- Accounts (6) ---

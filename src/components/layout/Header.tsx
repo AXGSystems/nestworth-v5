@@ -71,9 +71,7 @@ export default function Header() {
           type="button"
           aria-label="Search"
           className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-lg text-[var(--t2)] hover:bg-[var(--accS)] transition-colors"
-          onClick={() =>
-            openSheet('Search', <p className="text-sm text-[var(--t2)]">Search coming soon...</p>)
-          }
+          onClick={() => openSheet('Search')}
         >
           <svg
             width={18}
@@ -95,34 +93,7 @@ export default function Header() {
           type="button"
           aria-label="Notifications"
           className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-lg text-[var(--t2)] hover:bg-[var(--accS)] transition-colors relative"
-          onClick={() =>
-            openSheet(
-              'Notifications',
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--accS)]">
-                  <span className="w-2 h-2 rounded-full bg-[var(--neg)] mt-1.5 shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-[var(--t1)]">Shopping over budget</p>
-                    <p className="text-xs text-[var(--t2)]">$35 over cap in Shopping category</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--accS)]">
-                  <span className="w-2 h-2 rounded-full bg-[var(--warn)] mt-1.5 shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-[var(--t1)]">Cap One Savings stale</p>
-                    <p className="text-xs text-[var(--t2)]">47 days since last sync</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--accS)]">
-                  <span className="w-2 h-2 rounded-full bg-[var(--pos)] mt-1.5 shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-[var(--t1)]">Budget streak: 14 days</p>
-                    <p className="text-xs text-[var(--t2)]">Keep it up!</p>
-                  </div>
-                </div>
-              </div>,
-            )
-          }
+          onClick={() => openSheet('Notifications')}
         >
           <svg
             width={18}
@@ -146,9 +117,7 @@ export default function Header() {
           type="button"
           aria-label="Settings"
           className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-lg text-[var(--t2)] hover:bg-[var(--accS)] transition-colors"
-          onClick={() =>
-            openSheet('Settings', <p className="text-sm text-[var(--t2)]">Settings panel coming soon...</p>)
-          }
+          onClick={() => openSheet('Settings')}
         >
           <svg
             width={18}

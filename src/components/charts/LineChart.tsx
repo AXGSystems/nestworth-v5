@@ -53,7 +53,11 @@ export default function LineChart({
       return { points: pts, pathD: pd, areaD: ad, gridLines: grids, labels: lbls };
     }, [data, height]);
 
-  if (!data.length) return null;
+  if (!data.length) return (
+    <div className="flex items-center justify-center h-32 text-[var(--t3)] text-sm">
+      No data available
+    </div>
+  );
 
   return (
     <svg

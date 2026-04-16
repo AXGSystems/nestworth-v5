@@ -12,7 +12,8 @@ export type TabName = (typeof TABS)[number];
 export interface SheetState {
   open: boolean;
   title: string;
-  content: React.ReactNode | null;
+  sheetId: string | null;
+  sheetData: Record<string, unknown> | null;
 }
 
 // --- User Preferences ---
@@ -98,7 +99,7 @@ export interface Transaction {
   who: string;
   name: string;
   category: string;
-  amount: string;
+  amount: number;
   date: string;
   flagged?: boolean;
   refund?: boolean;

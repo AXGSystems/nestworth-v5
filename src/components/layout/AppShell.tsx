@@ -7,11 +7,12 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import TabBar from './TabBar';
 import Drawer from './Drawer';
+import SheetRenderer from './SheetRenderer';
+import ErrorBoundary from './ErrorBoundary';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const sheetOpen = useNestWorthStore((s) => s.sheetOpen);
   const sheetTitle = useNestWorthStore((s) => s.sheetTitle);
-  const sheetContent = useNestWorthStore((s) => s.sheetContent);
   const closeSheet = useNestWorthStore((s) => s.closeSheet);
 
   return (
@@ -29,7 +30,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
           {/* Page content */}
           <main className="flex-1 px-4 py-4 pb-20 lg:pb-4 lg:px-6 max-w-[1200px] w-full mx-auto nw-content-fade">
-            {children}
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
           </main>
         </div>
 
@@ -38,7 +41,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
         {/* Sheet overlay */}
         <Sheet open={sheetOpen} onClose={closeSheet} title={sheetTitle}>
-          {sheetContent}
+          <SheetRenderer />
         </Sheet>
       </div>
     </ToastProvider>

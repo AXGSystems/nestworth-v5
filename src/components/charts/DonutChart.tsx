@@ -50,7 +50,11 @@ export default function DonutChart({
     });
   }, [segments, size, total]);
 
-  if (!total || !segments.length) return null;
+  if (!total || !segments.length) return (
+    <div className="flex items-center justify-center h-32 text-[var(--t3)] text-sm">
+      No data available
+    </div>
+  );
 
   const cx = size / 2;
   const cy = size / 2;

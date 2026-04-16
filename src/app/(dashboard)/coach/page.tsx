@@ -156,7 +156,7 @@ export default function CoachPage() {
 
           {/* Chat messages */}
           <Card className="min-h-[400px] max-h-[60vh] overflow-y-auto !p-3">
-            <div className="space-y-3">
+            <div className="space-y-3" aria-live="polite">
               {messages.map((msg) => (
                 <div
                   key={msg.id}

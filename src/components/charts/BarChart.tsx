@@ -84,7 +84,11 @@ export default function BarChart({
     };
   }, [data, height, horizontal]);
 
-  if (!svg) return null;
+  if (!svg) return (
+    <div className="flex items-center justify-center h-32 text-[var(--t3)] text-sm">
+      No data available
+    </div>
+  );
 
   return (
     <svg

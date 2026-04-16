@@ -18,6 +18,9 @@ const pctUsed = Math.round((totalSpent / totalAllocated) * 100);
 
 const overBudget = budgetCategories.filter((c) => c.over);
 const warningCats = budgetCategories.filter((c) => c.warning);
+const daysLeft = 12; // days left in April
+const dailyRate = totalSpent / (30 - daysLeft); // avg daily spend so far
+const projectedSurplus = Math.round(totalAllocated - (dailyRate * 30));
 
 /* Donut for category split */
 const catColors = [
@@ -85,12 +88,12 @@ export default function SpendPage() {
         </div>
       </div>
 
-      {/* ---- Stat cards ---- */}
+      {/* ---- Stat cards (computed from data) ---- */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
         <StatCard
           label="Daily Safe Rate"
-          value="$140/day"
-          change="12 days left"
+          value={`${formatCurrency(Math.round(remaining / daysLeft))}/day`}
+          change={`${daysLeft} days left`}
           trend="flat"
         />
         <StatCard
@@ -107,7 +110,7 @@ export default function SpendPage() {
         />
         <StatCard
           label="Projected Surplus"
-          value="~$1,000"
+          value={`~${formatCurrency(projectedSurplus)}`}
           change="At current pace"
           trend="up"
         />

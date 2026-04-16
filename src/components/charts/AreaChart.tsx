@@ -69,7 +69,11 @@ export default function AreaChart({
     return { s1, s2, labels };
   }, [data1, data2, height]);
 
-  if (!chart) return null;
+  if (!chart) return (
+    <div className="flex items-center justify-center h-32 text-[var(--t3)] text-sm">
+      No data available
+    </div>
+  );
 
   return (
     <svg

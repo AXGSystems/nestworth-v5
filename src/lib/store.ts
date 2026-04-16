@@ -215,7 +215,8 @@ interface NestWorthState {
   drawerOpen: boolean;
   sheetOpen: boolean;
   sheetTitle: string;
-  sheetContent: React.ReactNode | null;
+  sheetId: string | null;
+  sheetData: Record<string, unknown> | null;
 
   // User preferences
   theme: ThemeName;
@@ -232,7 +233,7 @@ interface NestWorthState {
   setTab: (tab: TabName) => void;
   setPage: (page: string | null) => void;
   toggleDrawer: () => void;
-  openSheet: (title: string, content: React.ReactNode) => void;
+  openSheet: (id: string, data?: Record<string, unknown>) => void;
   closeSheet: () => void;
 
   // Actions — Preferences
@@ -258,7 +259,8 @@ export const useNestWorthStore = create<NestWorthState>()((set) => ({
   drawerOpen: false,
   sheetOpen: false,
   sheetTitle: '',
-  sheetContent: null,
+  sheetId: null,
+  sheetData: null,
 
   // User preferences (loaded from localStorage in hydration)
   theme: 'emerald',
@@ -281,11 +283,11 @@ export const useNestWorthStore = create<NestWorthState>()((set) => ({
   toggleDrawer: () =>
     set((state) => ({ drawerOpen: !state.drawerOpen })),
 
-  openSheet: (title, content) =>
-    set({ sheetOpen: true, sheetTitle: title, sheetContent: content }),
+  openSheet: (id, data) =>
+    set({ sheetOpen: true, sheetTitle: id, sheetId: id, sheetData: data ?? null }),
 
   closeSheet: () =>
-    set({ sheetOpen: false, sheetTitle: '', sheetContent: null }),
+    set({ sheetOpen: false, sheetTitle: '', sheetId: null, sheetData: null }),
 
   // Actions — Preferences
   setTheme: (theme) => {

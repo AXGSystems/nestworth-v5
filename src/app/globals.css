@@ -488,9 +488,11 @@ textarea::placeholder {
     color: #000 !important;
   }
 
+  /* Glassmorphic cards (React Card component uses backdrop-blur) */
   .nw-card,
   .nw-card-tap,
-  .nw-hero {
+  .nw-hero,
+  [class*="backdrop-blur"] {
     background: #fff !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
@@ -504,17 +506,34 @@ textarea::placeholder {
     color: #000 !important;
   }
 
-  /* Hide interactive elements */
-  button,
+  /* Hide sidebar, tab bar, header, sheets, drawer */
+  aside,
+  header,
+  nav[aria-label="Main tabs"],
+  [role="dialog"],
+  .nw-overlay,
   .nw-toggle,
   .nw-btn,
   .nw-btn-gold,
   .nw-btn-pill,
   .nw-btn-outline,
-  .nw-btn-danger,
-  nav,
-  .nw-overlay {
+  .nw-btn-danger {
     display: none !important;
+  }
+
+  /* Make main content full width */
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .flex.min-h-dvh {
+    display: block !important;
+  }
+
+  .flex-1.flex.flex-col.min-w-0 {
+    width: 100% !important;
   }
 
   /* Ensure text is visible */

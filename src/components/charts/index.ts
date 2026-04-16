@@ -1,3 +1,4 @@
+// All chart components are exported here. Used by dashboard pages and sub-pages.
 export { default as LineChart } from './LineChart';
 export { default as BarChart } from './BarChart';
 export { default as DonutChart } from './DonutChart';
