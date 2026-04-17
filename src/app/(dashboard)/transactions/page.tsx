@@ -16,8 +16,8 @@ const flaggedCount = transactions.filter((tx) => tx.flagged).length;
 
 /* Who color */
 const whoColor: Record<string, string> = {
-  V: 'var(--acc)',
-  C: 'var(--gold)',
+  C: 'var(--acc)',
+  Ch: 'var(--gold)',
   J: 'var(--info)',
 };
 
@@ -60,7 +60,7 @@ export default function TransactionsPage() {
         <p className="text-xs font-semibold opacity-80 mb-0.5">
           All Transactions
         </p>
-        <h1 className="text-3xl font-black tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
           {transactions.length} Transactions
         </h1>
         <div className="flex items-center gap-4 mt-2 text-xs font-semibold opacity-80">
@@ -78,9 +78,9 @@ export default function TransactionsPage() {
       </div>
 
       {/* ---- Filters ---- */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-2">
         {/* Search */}
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative flex-1 min-w-0 sm:min-w-[200px]">
           <svg
             width={16}
             height={16}
@@ -121,12 +121,12 @@ export default function TransactionsPage() {
 
         {/* Who filter */}
         <div className="flex gap-1">
-          {['', 'V', 'C', 'J'].map((w) => (
+          {['', 'C', 'Ch', 'J'].map((w) => (
             <button
               key={w}
               type="button"
               onClick={() => setWhoFilter(w)}
-              className={`px-3 py-2 rounded-lg text-[12px] font-semibold transition-all duration-150 ${
+              className={`px-3 py-2 rounded-lg text-[12px] font-semibold transition-all duration-150 min-h-[44px] min-w-[44px] ${
                 whoFilter === w
                   ? 'bg-[var(--accS)] text-[var(--acc)]'
                   : 'text-[var(--t2)] hover:bg-[var(--accS)]'

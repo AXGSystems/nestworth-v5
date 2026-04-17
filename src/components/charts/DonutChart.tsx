@@ -62,8 +62,8 @@ export default function DonutChart({
   const sw = size * 0.12;
 
   return (
-    <div className="flex items-center gap-4 flex-wrap">
-      <div className="shrink-0 relative" style={{ width: size, height: size }}>
+    <div className="flex flex-col sm:flex-row items-center gap-4 flex-wrap">
+      <div className="shrink-0 relative mx-auto sm:mx-0" style={{ width: size, height: size }}>
         <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full" role="img" aria-label="Donut chart">
           <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--sep)" strokeWidth={sw} />
           {arcs.map((arc, i) => (

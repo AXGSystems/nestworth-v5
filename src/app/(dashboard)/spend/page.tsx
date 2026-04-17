@@ -62,7 +62,7 @@ export default function SpendPage() {
         <p className="text-xs font-semibold opacity-80 mb-0.5">
           April Budget
         </p>
-        <h1 className="text-3xl font-black tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
           {formatCurrency(totalSpent)}{' '}
           <span className="text-base font-semibold opacity-70">
             of {formatCurrency(totalAllocated)}

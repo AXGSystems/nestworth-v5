@@ -67,7 +67,7 @@ export default function SavePage() {
         <p className="text-xs font-semibold opacity-80 mb-0.5">
           Total Saved Across Nests
         </p>
-        <h1 className="text-3xl font-black tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
           {formatCurrency(totalSaved)}{' '}
           <span className="text-base font-semibold opacity-70">
             of {formatCurrency(totalGoals)}

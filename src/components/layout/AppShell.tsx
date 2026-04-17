@@ -29,7 +29,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <Header />
 
           {/* Page content */}
-          <main className="flex-1 px-4 py-4 pb-20 lg:pb-4 lg:px-6 max-w-[1200px] w-full mx-auto nw-content-fade">
+          <main className="flex-1 px-4 py-4 pb-24 lg:pb-6 lg:px-6 xl:px-8 max-w-[1400px] w-full mx-auto nw-content-fade overflow-x-hidden">
             <ErrorBoundary>
               {children}
             </ErrorBoundary>

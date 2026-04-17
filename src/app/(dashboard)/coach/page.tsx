@@ -50,7 +50,7 @@ export default function CoachPage() {
     {
       id: ++chatMsgId,
       role: 'coach',
-      text: 'Hey Von! I\'m your NestWorth Coach. I can help with spending analysis, bill savings, forecast projections, and more. What would you like to know?',
+      text: 'Hey Christian! I\'m your NestWorth Coach. I can help with spending analysis, bill savings, forecast projections, and more. What would you like to know?',
       time: getTimestamp(),
     },
   ]);
@@ -147,7 +147,7 @@ export default function CoachPage() {
                 key={prompt.key}
                 type="button"
                 onClick={() => handleSend(prompt.label)}
-                className="px-3 py-1.5 rounded-full text-[12px] font-semibold bg-[var(--accS)] text-[var(--acc)] hover:brightness-105 active:scale-95 transition-all duration-150"
+                className="px-3 py-2 rounded-full text-[12px] font-semibold bg-[var(--accS)] text-[var(--acc)] hover:brightness-105 active:scale-95 transition-all duration-150 min-h-[36px]"
               >
                 {prompt.label}
               </button>
@@ -155,7 +155,7 @@ export default function CoachPage() {
           </div>
 
           {/* Chat messages */}
-          <Card className="min-h-[400px] max-h-[60vh] overflow-y-auto !p-3">
+          <Card className="min-h-[300px] sm:min-h-[400px] max-h-[50vh] sm:max-h-[60vh] overflow-y-auto !p-3">
             <div className="space-y-3" aria-live="polite">
               {messages.map((msg) => (
                 <div
@@ -180,7 +180,7 @@ export default function CoachPage() {
                       </svg>
                     </div>
                   ) : (
-                    <Avatar letter="V" size={28} color="var(--acc)" />
+                    <Avatar letter="C" size={28} color="var(--acc)" />
                   )}
                   <div
                     className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl ${
@@ -300,16 +300,16 @@ export default function CoachPage() {
               Household
             </p>
             <div className="flex items-center gap-3 mb-2">
-              <Avatar letter="V" size={32} color="var(--acc)" />
+              <Avatar letter="C" size={32} color="var(--acc)" />
               <div>
-                <p className="text-[13px] font-bold text-[var(--t1)]">Von</p>
+                <p className="text-[13px] font-bold text-[var(--t1)]">Christian</p>
                 <p className="text-[10px] text-[var(--t2)]">Primary</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Avatar letter="C" size={32} color="var(--gold)" />
+              <Avatar letter="Ch" size={32} color="var(--gold)" />
               <div>
-                <p className="text-[13px] font-bold text-[var(--t1)]">Caroline</p>
+                <p className="text-[13px] font-bold text-[var(--t1)]">Channelle</p>
                 <p className="text-[10px] text-[var(--t2)]">Partner</p>
               </div>
             </div>

@@ -83,7 +83,7 @@ export default function ForecastPage() {
         <p className="text-xs font-semibold opacity-80 mb-0.5">
           Cash Forecast
         </p>
-        <h1 className="text-3xl font-black tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
           90-Day Projection
         </h1>
         <div className="flex items-center gap-4 mt-2 text-xs font-semibold opacity-80">

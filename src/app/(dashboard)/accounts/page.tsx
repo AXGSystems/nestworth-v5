@@ -44,7 +44,7 @@ export default function AccountsPage() {
             <p className="text-xs font-semibold opacity-80 mb-0.5">
               Total Net Worth
             </p>
-            <h1 className="text-3xl font-black tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
               {formatCurrency(netWorth)}
             </h1>
           </div>
@@ -74,8 +74,8 @@ export default function AccountsPage() {
       {/* ---- Account List ---- */}
       <Card>
         <p className="text-sm font-bold text-[var(--t1)] mb-3">All Accounts</p>
-        <div className="overflow-x-auto -mx-4">
-          <table className="w-full text-sm border-collapse min-w-full">
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <table className="w-full text-sm border-collapse min-w-[600px]">
             <thead>
               <tr>
                 <th className="px-4 py-2 text-[10px] font-bold uppercase tracking-wider text-[var(--t3)] text-left">Status</th>

@@ -33,11 +33,11 @@ export default function StatCard({
   return (
     <Card onClick={onClick}>
       <p className="text-xs font-medium text-[var(--t2)] mb-1">{label}</p>
-      <p className="text-xl font-bold tracking-tight text-[var(--t1)] font-[tabular-nums]">
+      <p className="text-lg sm:text-xl font-bold tracking-tight text-[var(--t1)] font-[tabular-nums] truncate">
         {value}
       </p>
       {change && (
-        <div className={`flex items-center gap-1 mt-1 text-xs font-semibold ${trendColors[trend]}`}>
+        <div className={`flex items-center gap-1 mt-1 text-xs font-semibold min-w-0 ${trendColors[trend]}`}>
           <svg
             width={10}
             height={10}
@@ -50,7 +50,7 @@ export default function StatCard({
           >
             <polyline points={trendArrows[trend]} />
           </svg>
-          <span className="font-[tabular-nums]">{change}</span>
+          <span className="font-[tabular-nums] truncate">{change}</span>
         </div>
       )}
     </Card>

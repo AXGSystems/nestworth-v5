@@ -202,14 +202,21 @@ textarea::placeholder {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 0.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
   position: relative;
   color: var(--heroTxt);
-  padding: 20px 18px;
+  padding: 16px 14px;
   margin-bottom: 10px;
   z-index: 1;
   box-shadow: var(--shL);
+}
+
+@media (min-width: 640px) {
+  .nw-hero {
+    border-radius: 20px;
+    padding: 20px 18px;
+  }
 }
 
 .nw-hero::before {

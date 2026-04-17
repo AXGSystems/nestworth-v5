@@ -22,7 +22,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-4 bg-[var(--barBg)] backdrop-blur-xl border-b border-[var(--barBorder)]">
+    <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-4 bg-[var(--barBg)] backdrop-blur-xl border-b border-[var(--barBorder)]" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
       {/* Left: hamburger (mobile) + logo */}
       <div className="flex items-center gap-3">
         {/* Hamburger — mobile only */}
@@ -62,8 +62,8 @@ export default function Header() {
       <div className="flex items-center gap-2">
         {/* Partner avatars */}
         <div className="flex -space-x-2 mr-1">
-          <Avatar letter="V" size={28} color="var(--acc)" />
-          <Avatar letter="C" size={28} color="var(--gold)" />
+          <Avatar letter="C" size={28} color="var(--acc)" />
+          <Avatar letter="Ch" size={28} color="var(--gold)" />
         </div>
 
         {/* Search */}

@@ -54,8 +54,8 @@ const cfExpense = cashFlow.map((p) => ({ label: p.m, value: p.exp }));
 
 /* Transaction who-color map */
 const whoColor: Record<string, string> = {
-  V: 'var(--acc)',
-  C: 'var(--gold)',
+  C: 'var(--acc)',
+  Ch: 'var(--gold)',
   J: 'var(--info)',
 };
 
@@ -72,7 +72,7 @@ export default function HomePage() {
             <p className="text-xs font-semibold opacity-80 mb-0.5">
               Household Net Worth
             </p>
-            <h1 className="text-3xl font-black tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
               {formatCurrency(currentNW)}
             </h1>
           </div>
@@ -132,7 +132,7 @@ export default function HomePage() {
       </div>
 
       {/* ---- Quick links ---- */}
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         {[
           { label: 'ChargeIQ', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z', action: () => router.push('/chargeiq') },
           { label: 'Bills', icon: 'M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z M16 2v4 M8 2v4 M3 10h18', action: () => setPage('bills') },

@@ -22,8 +22,8 @@ const flaggedSubs = subscriptions.filter((s) => s.issue);
 
 /* Who color */
 const whoColor: Record<string, string> = {
-  V: 'var(--acc)',
-  C: 'var(--gold)',
+  C: 'var(--acc)',
+  Ch: 'var(--gold)',
   J: 'var(--info)',
 };
 
@@ -74,7 +74,7 @@ export default function MoneyPage() {
         <p className="text-xs font-semibold opacity-80 mb-0.5">
           Total Assets
         </p>
-        <h1 className="text-3xl font-black tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
           {formatCurrency(totalAssets)}
         </h1>
         <div className="flex items-center gap-4 mt-2 text-xs font-semibold opacity-80">
@@ -116,13 +116,13 @@ export default function MoneyPage() {
       </div>
 
       {/* ---- Tab switcher ---- */}
-      <div className="flex gap-1 bg-[var(--accS)] p-1 rounded-xl">
+      <div className="flex gap-1 bg-[var(--accS)] p-1 rounded-xl overflow-x-auto">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             type="button"
             onClick={() => setActiveTab(tab.key)}
-            className={`flex-1 py-2 px-3 rounded-lg text-[13px] font-semibold transition-all duration-150 ${
+            className={`flex-1 py-2.5 px-3 rounded-lg text-[13px] font-semibold transition-all duration-150 min-h-[44px] whitespace-nowrap ${
               activeTab === tab.key
                 ? 'bg-[var(--cardBg)] text-[var(--t1)] shadow-sm'
                 : 'text-[var(--t2)] hover:text-[var(--t1)]'

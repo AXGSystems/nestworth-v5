@@ -70,7 +70,7 @@ export default function CreditPage() {
           Credit Health Score
         </p>
         <div className="flex items-center gap-3">
-          <h1 className="text-4xl font-black tracking-tight">{latestScore}</h1>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight">{latestScore}</h1>
           <Badge
             text={scoreLabel(latestScore)}
             color={scoreColor(latestScore)}

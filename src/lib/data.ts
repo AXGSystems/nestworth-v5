@@ -112,31 +112,31 @@ export const actualSavings: ActualSavingsPoint[] = [
 
 // --- Transactions (16+) ---
 export const transactions: Transaction[] = [
-  { who: 'V', name: 'Whole Foods', category: 'Groceries', amount: -67.43, date: 'Today' },
-  { who: 'C', name: 'TreatYoSelf', category: 'Clothing', amount: -650.00, date: 'Yesterday', flagged: true },
-  { who: 'V', name: 'Shell Gas', category: 'Transport', amount: -48.20, date: 'Yesterday' },
+  { who: 'C', name: 'Whole Foods', category: 'Groceries', amount: -67.43, date: 'Today' },
+  { who: 'Ch', name: 'TreatYoSelf', category: 'Clothing', amount: -650.00, date: 'Yesterday', flagged: true },
+  { who: 'C', name: 'Shell Gas', category: 'Transport', amount: -48.20, date: 'Yesterday' },
   { who: 'J', name: 'Mortgage', category: 'Housing', amount: -2000, date: 'Friday' },
-  { who: 'C', name: 'Target Refund', category: 'Refund', amount: 84.50, date: 'Apr 10', refund: true },
-  { who: 'V', name: 'Netflix', category: 'Subscriptions', amount: -15.49, date: 'Apr 10' },
-  { who: 'C', name: 'Amazon', category: 'Shopping', amount: -150.00, date: 'Apr 10' },
-  { who: 'V', name: 'ALTA Payroll', category: 'Income', amount: 4280, date: 'Apr 11', income: true },
-  { who: 'V', name: 'Costco', category: 'Groceries', amount: -124.30, date: 'Apr 8' },
-  { who: 'C', name: 'Starbucks', category: 'Dining', amount: -6.75, date: 'Apr 8' },
-  { who: 'V', name: 'Trader Joe\'s', category: 'Groceries', amount: -42.50, date: 'Apr 7' },
-  { who: 'C', name: 'Uber Eats', category: 'Dining', amount: -32.00, date: 'Apr 7' },
+  { who: 'Ch', name: 'Target Refund', category: 'Refund', amount: 84.50, date: 'Apr 10', refund: true },
+  { who: 'C', name: 'Netflix', category: 'Subscriptions', amount: -15.49, date: 'Apr 10' },
+  { who: 'Ch', name: 'Amazon', category: 'Shopping', amount: -150.00, date: 'Apr 10' },
+  { who: 'C', name: 'ALTA Payroll', category: 'Income', amount: 4280, date: 'Apr 11', income: true },
+  { who: 'C', name: 'Costco', category: 'Groceries', amount: -124.30, date: 'Apr 8' },
+  { who: 'Ch', name: 'Starbucks', category: 'Dining', amount: -6.75, date: 'Apr 8' },
+  { who: 'C', name: 'Trader Joe\'s', category: 'Groceries', amount: -42.50, date: 'Apr 7' },
+  { who: 'Ch', name: 'Uber Eats', category: 'Dining', amount: -32.00, date: 'Apr 7' },
   { who: 'J', name: 'Insurance', category: 'Insurance', amount: -184.00, date: 'Apr 5' },
-  { who: 'V', name: 'CVS Pharmacy', category: 'Health', amount: -27.50, date: 'Apr 4' },
-  { who: 'C', name: 'Caroline Freelance', category: 'Income', amount: 2800, date: 'Apr 1', income: true },
-  { who: 'V', name: 'Gym', category: 'Fitness', amount: -50.00, date: 'Apr 1' },
+  { who: 'C', name: 'CVS Pharmacy', category: 'Health', amount: -27.50, date: 'Apr 4' },
+  { who: 'Ch', name: 'Channelle Freelance', category: 'Income', amount: 2800, date: 'Apr 1', income: true },
+  { who: 'C', name: 'Gym', category: 'Fitness', amount: -50.00, date: 'Apr 1' },
 ];
 
 // --- Accounts (6) ---
 export const accounts: Account[] = [
   { name: 'Chase Checking', type: 'Checking', value: 5360, status: 'ok', lastSync: '2h', owner: 'Joint' },
   { name: 'Chase Savings', type: 'Savings', value: 12400, status: 'ok', lastSync: '2h', owner: 'Joint' },
-  { name: 'Capital One', type: 'Checking', value: 2100, status: 'warn', lastSync: '3d', owner: 'Von' },
-  { name: 'Cap One Savings', type: 'Savings', value: 8200, status: 'stale', lastSync: '47d', owner: 'Caroline' },
-  { name: 'Ally Invest', type: 'Investment', value: 26500, status: 'ok', lastSync: '1d', owner: 'Von' },
+  { name: 'Capital One', type: 'Checking', value: 2100, status: 'warn', lastSync: '3d', owner: 'Christian' },
+  { name: 'Cap One Savings', type: 'Savings', value: 8200, status: 'stale', lastSync: '47d', owner: 'Channelle' },
+  { name: 'Ally Invest', type: 'Investment', value: 26500, status: 'ok', lastSync: '1d', owner: 'Christian' },
   { name: 'Credit Cards', type: 'Credit', value: -1200, status: 'ok', lastSync: '6h', owner: 'Joint' },
 ];
 
@@ -157,16 +157,16 @@ export const bills: Bill[] = [
 export const subscriptions: Subscription[] = [
   { name: 'Netflix', amount: 15.49, owner: 'Shared', ok: true, usageScore: 9, category: 'Entertainment' },
   { name: 'Hulu', amount: 17.99, owner: 'Shared', issue: 'Low use', usageScore: 3, category: 'Entertainment' },
-  { name: 'Disney+', amount: 13.99, owner: 'Caroline', issue: '<5%', usageScore: 1, category: 'Entertainment' },
-  { name: 'Headspace', amount: 14.99, owner: 'Von', issue: '60d', usageScore: 2, category: 'Wellness' },
-  { name: 'Adobe CC', amount: 22.99, owner: 'Caroline', issue: '90d', usageScore: 1, category: 'Productivity' },
+  { name: 'Disney+', amount: 13.99, owner: 'Channelle', issue: '<5%', usageScore: 1, category: 'Entertainment' },
+  { name: 'Headspace', amount: 14.99, owner: 'Christian', issue: '60d', usageScore: 2, category: 'Wellness' },
+  { name: 'Adobe CC', amount: 22.99, owner: 'Channelle', issue: '90d', usageScore: 1, category: 'Productivity' },
   { name: 'Spotify', amount: 16.99, owner: 'Shared', ok: true, usageScore: 10, category: 'Entertainment' },
-  { name: 'iCloud', amount: 2.99, owner: 'Von', ok: true, usageScore: 8, category: 'Storage' },
+  { name: 'iCloud', amount: 2.99, owner: 'Christian', ok: true, usageScore: 8, category: 'Storage' },
   { name: 'YouTube Premium', amount: 13.99, owner: 'Shared', ok: true, usageScore: 7, category: 'Entertainment' },
   { name: 'Gym', amount: 50, owner: 'Shared', ok: true, usageScore: 6, category: 'Fitness' },
-  { name: 'NYT', amount: 4.25, owner: 'Von', ok: true, usageScore: 5, category: 'News' },
-  { name: 'ChatGPT Plus', amount: 20, owner: 'Von', ok: true, usageScore: 9, category: 'AI' },
-  { name: 'Dropbox', amount: 11.99, owner: 'Caroline', issue: 'Low use', usageScore: 2, category: 'Storage' },
+  { name: 'NYT', amount: 4.25, owner: 'Christian', ok: true, usageScore: 5, category: 'News' },
+  { name: 'ChatGPT Plus', amount: 20, owner: 'Christian', ok: true, usageScore: 9, category: 'AI' },
+  { name: 'Dropbox', amount: 11.99, owner: 'Channelle', issue: 'Low use', usageScore: 2, category: 'Storage' },
 ];
 
 // --- Nests / Savings Goals (6) ---
@@ -195,10 +195,10 @@ export const budgetCategories: BudgetCategory[] = [
 
 // --- Income Sources (5) ---
 export const incomeSources: IncomeSource[] = [
-  { source: 'ALTA Payroll (Von)', frequency: 'Biweekly', nextDate: 'Apr 25', amount: '$4,280', amountNum: 4280, status: 'ok' },
-  { source: 'Freelance (Caroline)', frequency: 'Monthly', nextDate: 'Apr 15', amount: '~$2,800', amountNum: 2800, status: 'due' },
+  { source: 'ALTA Payroll (Christian)', frequency: 'Biweekly', nextDate: 'Apr 25', amount: '$4,280', amountNum: 4280, status: 'ok' },
+  { source: 'Freelance (Channelle)', frequency: 'Monthly', nextDate: 'Apr 15', amount: '~$2,800', amountNum: 2800, status: 'due' },
   { source: 'Rental', frequency: 'Monthly 1st', nextDate: 'May 1', amount: '$1,200', amountNum: 1200, status: 'ok' },
-  { source: 'Etsy Shop (Caroline)', frequency: 'Weekly', nextDate: 'Apr 21', amount: '~$320', amountNum: 320, status: 'ok' },
+  { source: 'Etsy Shop (Channelle)', frequency: 'Weekly', nextDate: 'Apr 21', amount: '~$320', amountNum: 320, status: 'ok' },
   { source: 'Stock Dividends', frequency: 'Quarterly', nextDate: 'Jun 15', amount: '$185', amountNum: 185, status: 'ok' },
 ];
 
@@ -293,15 +293,15 @@ export const chargeIQDemoCharges: ChargeIQResult[] = [
 // --- Coach AI Responses ---
 export const coachResponses: CoachResponses = {
   Spending:
-    'This week:\n\n\u2022 Von: $145\n\u2022 Caroline: $755 (TreatYoSelf $650)\n\nSpending 38% faster than average. May exceed budget by $420.',
+    'This week:\n\n\u2022 Christian: $145\n\u2022 Channelle: $755 (TreatYoSelf $650)\n\nSpending 38% faster than average. May exceed budget by $420.',
   Sync:
-    'Cap One Savings disconnected by Caroline Mar 12. 47 days stale. Cross-reference shows 3 unmatched ($342).\n\nMonarch shows stale numbers silently. We flag it.',
+    'Cap One Savings disconnected by Channelle Mar 12. 47 days stale. Cross-reference shows 3 unmatched ($342).\n\nMonarch shows stale numbers silently. We flag it.',
   Bills:
     '4 savings opportunities:\n1. Insurance: -$38\n2. Streaming: -$24\n3. Internet: -$25\n4. Phone: -$60\n\n+3 unused subs: $62\nTotal: $209/mo \u2192 $2,508/yr',
   Save:
-    '7 moves for $409/mo ($4,908/yr):\n1. Bill audit $147\n2. Drop subs $62\n3. Tighten Shopping\n4. Tighten Dining\n5. Round-Ups for Caroline\n6. Bump daily save\n7. Switch phone',
+    '7 moves for $409/mo ($4,908/yr):\n1. Bill audit $147\n2. Drop subs $62\n3. Tighten Shopping\n4. Tighten Dining\n5. Round-Ups for Channelle\n6. Bump daily save\n7. Switch phone',
   Audit:
-    'Mar 12 \u2014 Caroline disconnected Cap One\nMar 10 \u2014 Caroline deleted Target $84.50\nMar 14 \u2014 Von reconnected\nFeb 25 \u2014 Recategorized Amazon\nFeb 20 \u2014 Von exported Q1',
+    'Mar 12 \u2014 Channelle disconnected Cap One\nMar 10 \u2014 Channelle deleted Target $84.50\nMar 14 \u2014 Christian reconnected\nFeb 25 \u2014 Recategorized Amazon\nFeb 20 \u2014 Christian exported Q1',
   Forecast:
     'At current pace:\n\u2022 End of April: $84,800\n\u2022 End of Q2: $89,200\n\u2022 End of Year: $115,400\n\nWith bill audit savings applied:\n\u2022 End of Year: $117,200 (+$1,764)',
   Budget:

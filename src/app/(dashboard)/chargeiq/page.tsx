@@ -93,9 +93,9 @@ export default function ChargeIQPage() {
               onClick={() => setSelectedCharge(selectedCharge === idx ? null : idx)}
               className="w-full text-left"
             >
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] font-mono font-bold text-[var(--t1)]">
+                  <p className="text-[13px] font-mono font-bold text-[var(--t1)] break-all sm:break-normal">
                     {charge.raw}
                   </p>
                   <p className="text-[13px] font-semibold text-[var(--acc)] mt-0.5">
@@ -105,7 +105,7 @@ export default function ChargeIQPage() {
                     {charge.description}
                   </p>
                 </div>
-                <div className="flex items-center gap-2 ml-3">
+                <div className="flex items-center gap-2 shrink-0">
                   <Badge text={charge.category} color="var(--acc)" />
                   <Badge
                     text={`${charge.confidence}%`}

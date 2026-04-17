@@ -19,7 +19,7 @@ import { hasPrototypePollution } from './utils';
 const ALERT_DEFAULT: AlertPrefs = {
   email: true,
   sms: false,
-  emailAddr: 'von@example.com',
+  emailAddr: 'christian@example.com',
   phone: '',
   types: {
     overspend: true,

@@ -56,17 +56,17 @@ export default function SettingsPage() {
         <p className="text-sm font-bold text-[var(--t1)] mb-3">Household Profile</p>
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Avatar letter="V" size={40} color="var(--acc)" />
+            <Avatar letter="C" size={40} color="var(--acc)" />
             <div className="flex-1">
-              <p className="text-[14px] font-bold text-[var(--t1)]">Von Scott</p>
+              <p className="text-[14px] font-bold text-[var(--t1)]">Christian</p>
               <p className="text-[11px] text-[var(--t2)]">Primary &middot; vscott@alta.org</p>
             </div>
             <Badge text="PRIMARY" color="var(--acc)" />
           </div>
           <div className="flex items-center gap-3">
-            <Avatar letter="C" size={40} color="var(--gold)" />
+            <Avatar letter="Ch" size={40} color="var(--gold)" />
             <div className="flex-1">
-              <p className="text-[14px] font-bold text-[var(--t1)]">Caroline</p>
+              <p className="text-[14px] font-bold text-[var(--t1)]">Channelle</p>
               <p className="text-[11px] text-[var(--t2)]">Partner &middot; Full access</p>
             </div>
             <Badge text="PARTNER" color="var(--gold)" />
@@ -92,7 +92,7 @@ export default function SettingsPage() {
         {/* ---- Theme Picker ---- */}
         <Card>
           <p className="text-sm font-bold text-[var(--t1)] mb-3">Theme</p>
-          <div className="grid grid-cols-5 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
             {THEMES.map((t) => (
               <button
                 key={t.name}
@@ -235,7 +235,7 @@ export default function SettingsPage() {
         <p className="text-sm font-bold text-[var(--t1)] mb-3">
           Data & Export
         </p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {[
             { label: 'Export CSV', desc: 'Download all transactions' },
             { label: 'Export PDF', desc: 'Generate report' },

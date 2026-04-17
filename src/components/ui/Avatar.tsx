@@ -19,12 +19,12 @@ export default function Avatar({
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        fontSize: `${Math.round(size * 0.44)}px`,
+        fontSize: `${Math.round(size * (letter.length > 1 ? 0.36 : 0.44))}px`,
         background: color,
       }}
       aria-hidden="true"
     >
-      {letter.charAt(0).toUpperCase()}
+      {letter.length > 1 ? letter : letter.charAt(0).toUpperCase()}
     </div>
   );
 }
