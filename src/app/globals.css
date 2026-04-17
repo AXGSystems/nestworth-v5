@@ -1,4 +1,4 @@
-/* NestWorth v5 — Global Styles */
+/* NestWorth v5 — Global Styles — Premium Visual Overhaul */
 @import "tailwindcss";
 @import "../styles/themes.css";
 
@@ -136,31 +136,44 @@ textarea::placeholder {
   }
 }
 
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
 /* ============================================================
-   Glassmorphic Card System
+   Glassmorphic Card System — PREMIUM
    ============================================================ */
 
 .nw-card {
   background: var(--cardBg);
-  backdrop-filter: blur(var(--glassBlur));
-  -webkit-backdrop-filter: blur(var(--glassBlur));
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
   border: 0.5px solid var(--cardBorder);
   border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 10px;
+  padding: 20px;
+  margin-bottom: 0;
   position: relative;
   z-index: 1;
-  box-shadow: var(--sh);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04), 0 0.5px 1px rgba(0,0,0,0.06);
   contain: content;
   transition:
-    transform var(--fast) var(--spring),
-    box-shadow var(--fast) ease,
-    background var(--fast) ease;
+    transform 0.18s cubic-bezier(0.22,1,0.36,1),
+    box-shadow 0.18s ease,
+    background 0.15s ease;
+}
+
+.nw-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .nw-card:active {
   transform: scale(0.98);
-  box-shadow: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   transition-duration: 0.08s;
 }
 
@@ -172,7 +185,8 @@ textarea::placeholder {
 
 .nw-card-tap:hover {
   background: var(--cardBgH);
-  box-shadow: var(--shM);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  transform: translateY(-1px);
 }
 
 .nw-card-tap:focus-visible {
@@ -182,57 +196,83 @@ textarea::placeholder {
 }
 
 .nw-card-accent {
-  border-top: 2px solid var(--acc);
+  border-left: 3px solid var(--acc);
 }
 
 .nw-card-inner {
   background: var(--accS);
   border: 0.5px solid var(--cardBorder);
   border-radius: 12px;
-  padding: 10px;
+  padding: 14px;
   transition: transform var(--fast) var(--spring);
 }
 
 /* ============================================================
-   Hero Section
+   Hero Section — PREMIUM with layered depth
    ============================================================ */
 
 .nw-hero {
   background: var(--heroGrad);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
   overflow: hidden;
   position: relative;
   color: var(--heroTxt);
-  padding: 16px 14px;
-  margin-bottom: 10px;
+  padding: 24px 22px;
   z-index: 1;
-  box-shadow: var(--shL);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
 }
 
 @media (min-width: 640px) {
   .nw-hero {
-    border-radius: 20px;
-    padding: 20px 18px;
+    border-radius: 24px;
+    padding: 28px 26px;
   }
 }
 
 .nw-hero::before {
   content: "";
   position: absolute;
-  top: -25px;
-  right: -15px;
-  width: 120px;
-  height: 120px;
+  top: -40px;
+  right: -20px;
+  width: 180px;
+  height: 180px;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.08),
     transparent 70%
   );
   border-radius: 50%;
   pointer-events: none;
+}
+
+.nw-hero::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: -10px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.04),
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ============================================================
+   Sidebar — PREMIUM glass
+   ============================================================ */
+
+.nw-sidebar {
+  background: var(--sidebarBg);
+  backdrop-filter: blur(30px) saturate(1.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  border-right: 0.5px solid var(--barBorder);
 }
 
 /* ============================================================
@@ -261,6 +301,7 @@ textarea::placeholder {
 
 .nw-btn:hover {
   filter: brightness(1.08);
+  transform: translateY(-1px);
 }
 .nw-btn:active {
   transform: scale(0.96);
@@ -378,26 +419,26 @@ textarea::placeholder {
 }
 
 /* ============================================================
-   Layout Helpers
+   Layout Helpers — PREMIUM spacing
    ============================================================ */
 
 .nw-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   min-width: 0;
 }
 
 .nw-separator {
   height: 0.5px;
   background: var(--sep);
-  margin: 0 -16px;
+  margin: 0 -20px;
 }
 
 .nw-badge {
   font-size: 10px;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: 6px;
   letter-spacing: 0.3px;
   white-space: nowrap;
@@ -406,11 +447,26 @@ textarea::placeholder {
 }
 
 .nw-section-header {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.3px;
   color: var(--t1);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nw-section-header .nw-view-all {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--acc);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.nw-section-header .nw-view-all:hover {
+  opacity: 0.7;
 }
 
 .nw-sub {
@@ -419,8 +475,153 @@ textarea::placeholder {
   color: var(--t2);
 }
 
+/* Section divider for visual hierarchy */
+.nw-section-divider {
+  height: 0.5px;
+  background: var(--sep);
+  margin: 8px 0;
+}
+
 /* ============================================================
-   Progress Bar
+   Stat Card — PREMIUM enhancements
+   ============================================================ */
+
+.nw-stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.nw-stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  border-radius: 3px 0 0 3px;
+  background: var(--stat-accent, var(--acc));
+  opacity: 0.6;
+}
+
+/* ============================================================
+   Quick Links — PREMIUM
+   ============================================================ */
+
+.nw-quick-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 8px;
+  border-radius: 16px;
+  background: var(--cardBg);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 0.5px solid var(--cardBorder);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04), 0 0.5px 1px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.22,1,0.36,1);
+}
+
+.nw-quick-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  background: var(--cardBgH);
+}
+
+.nw-quick-link:active {
+  transform: scale(0.96);
+  transition-duration: 0.08s;
+}
+
+.nw-quick-link-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s ease;
+}
+
+.nw-quick-link:hover .nw-quick-link-icon {
+  transform: scale(1.05);
+}
+
+/* ============================================================
+   Transaction Row — PREMIUM
+   ============================================================ */
+
+.nw-tx-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 0.5px solid var(--sep);
+  transition: background 0.15s ease;
+  min-height: 56px;
+}
+
+.nw-tx-row:last-child {
+  border-bottom: none;
+}
+
+.nw-tx-row:hover {
+  background: var(--accS);
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 12px;
+}
+
+/* ============================================================
+   Table Rows — PREMIUM
+   ============================================================ */
+
+.nw-table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 0.5px solid var(--sep);
+  transition: background 0.15s ease;
+  min-height: 52px;
+}
+
+.nw-table-row:last-child {
+  border-bottom: none;
+}
+
+.nw-table-row:hover {
+  background: var(--accS);
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 12px;
+}
+
+/* ============================================================
+   Achievement Card — PREMIUM
+   ============================================================ */
+
+.nw-achievement {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--accS);
+  border: 0.5px solid var(--cardBorder);
+  transition: all 0.18s ease;
+}
+
+.nw-achievement:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+/* ============================================================
+   Progress Bar — PREMIUM
    ============================================================ */
 
 .nw-bar-track {
@@ -483,6 +684,33 @@ textarea::placeholder {
 .nw-overlay.open {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* ============================================================
+   Input Fields — PREMIUM
+   ============================================================ */
+
+.nw-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--cardBg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0.5px solid var(--cardBorder);
+  border-radius: 14px;
+  font-size: 14px;
+  color: var(--t1);
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.nw-input:focus {
+  border-color: var(--acc);
+  box-shadow: 0 0 0 3px var(--accS);
+}
+
+.nw-input::placeholder {
+  color: var(--t3);
 }
 
 /* ============================================================

@@ -36,7 +36,7 @@ function StatusDot({ status }: { status: 'ok' | 'warn' | 'stale' }) {
   };
   return (
     <span
-      className={`w-2 h-2 rounded-full shrink-0 ${colors[status]}`}
+      className={`w-2.5 h-2.5 rounded-full shrink-0 ${colors[status]}`}
       title={status}
     />
   );
@@ -68,16 +68,16 @@ export default function MoneyPage() {
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* ---- Hero ---- */}
       <div className="nw-hero">
-        <p className="text-xs font-semibold opacity-80 mb-0.5">
+        <p className="text-[11px] font-bold uppercase tracking-wider opacity-70 mb-1">
           Total Assets
         </p>
-        <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-none">
           {formatCurrency(totalAssets)}
         </h1>
-        <div className="flex items-center gap-4 mt-2 text-xs font-semibold opacity-80">
+        <div className="flex items-center gap-5 mt-3 text-[13px] font-semibold opacity-80">
           <span>
             Liabilities: {formatCurrency(totalLiabilities)}
           </span>
@@ -88,7 +88,7 @@ export default function MoneyPage() {
       </div>
 
       {/* ---- Stat cards ---- */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
           label="Accounts"
           value={String(accounts.length)}
@@ -116,15 +116,15 @@ export default function MoneyPage() {
       </div>
 
       {/* ---- Tab switcher ---- */}
-      <div className="flex gap-1 bg-[var(--accS)] p-1 rounded-xl overflow-x-auto">
+      <div className="flex gap-1.5 bg-[var(--accS)] p-1.5 rounded-2xl overflow-x-auto">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             type="button"
             onClick={() => setActiveTab(tab.key)}
-            className={`flex-1 py-2.5 px-3 rounded-lg text-[13px] font-semibold transition-all duration-150 min-h-[44px] whitespace-nowrap ${
+            className={`flex-1 py-2.5 px-4 rounded-xl text-[13px] font-semibold transition-all duration-200 min-h-[44px] whitespace-nowrap ${
               activeTab === tab.key
-                ? 'bg-[var(--cardBg)] text-[var(--t1)] shadow-sm'
+                ? 'bg-[var(--cardBg)] backdrop-blur-xl text-[var(--t1)] shadow-sm'
                 : 'text-[var(--t2)] hover:text-[var(--t1)]'
             }`}
           >
@@ -137,24 +137,24 @@ export default function MoneyPage() {
 
       {/* Accounts */}
       {activeTab === 'accounts' && (
-        <div className="space-y-2.5">
+        <div className="space-y-3">
           {accounts.map((acc) => (
             <Card key={acc.name}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <StatusDot status={acc.status} />
                   <div>
-                    <p className="text-[13px] font-bold text-[var(--t1)]">
+                    <p className="text-[14px] font-bold text-[var(--t1)]">
                       {acc.name}
                     </p>
-                    <p className="text-[11px] text-[var(--t2)]">
+                    <p className="text-[12px] text-[var(--t2)] mt-0.5">
                       {acc.type} &middot; {acc.owner} &middot; Synced {acc.lastSync} ago
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p
-                    className={`text-[15px] font-bold font-[tabular-nums] ${
+                    className={`text-[16px] font-bold font-[tabular-nums] ${
                       acc.value < 0 ? 'text-[var(--neg)]' : 'text-[var(--t1)]'
                     }`}
                   >
@@ -175,7 +175,7 @@ export default function MoneyPage() {
 
       {/* Transactions */}
       {activeTab === 'transactions' && (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {/* Search bar */}
           <div className="relative">
             <svg
@@ -186,7 +186,7 @@ export default function MoneyPage() {
               stroke="var(--t3)"
               strokeWidth={2}
               strokeLinecap="round"
-              className="absolute left-3 top-1/2 -translate-y-1/2"
+              className="absolute left-4 top-1/2 -translate-y-1/2"
               aria-hidden="true"
             >
               <circle cx={11} cy={11} r={8} />
@@ -199,38 +199,38 @@ export default function MoneyPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               maxLength={200}
-              className="w-full pl-10 pr-4 py-2.5 bg-[var(--cardBg)] border border-[var(--cardBorder)] rounded-xl text-sm text-[var(--t1)] placeholder:text-[var(--t3)] outline-none focus:border-[var(--acc)] transition-colors"
+              className="nw-input pl-11"
             />
           </div>
 
           {/* Transaction list */}
           <Card>
-            <div className="space-y-0">
+            <div>
               {filteredTx.map((tx) => (
                 <div
                   key={`${tx.who}-${tx.name}-${tx.date}`}
-                  className="flex items-center gap-3 py-2.5 border-b border-[var(--sep)] last:border-b-0"
+                  className="nw-tx-row"
                 >
                   <Avatar
                     letter={tx.who}
-                    size={28}
+                    size={36}
                     color={whoColor[tx.who] ?? 'var(--t3)'}
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
-                      <p className="text-sm font-semibold text-[var(--t1)] truncate">
+                      <p className="text-[14px] font-semibold text-[var(--t1)] truncate">
                         {tx.name}
                       </p>
                       {tx.flagged && <Badge text="FLAG" color="var(--neg)" />}
                       {tx.refund && <Badge text="REFUND" color="var(--pos)" />}
                       {tx.income && <Badge text="INCOME" color="var(--pos)" />}
                     </div>
-                    <p className="text-[11px] text-[var(--t2)]">
+                    <p className="text-[12px] text-[var(--t2)] mt-0.5">
                       {tx.category} &middot; {tx.date}
                     </p>
                   </div>
                   <span
-                    className={`text-sm font-bold font-[tabular-nums] ${
+                    className={`text-[14px] font-bold font-[tabular-nums] ${
                       tx.amount > 0
                         ? 'text-[var(--pos)]'
                         : 'text-[var(--t1)]'
@@ -241,7 +241,7 @@ export default function MoneyPage() {
                 </div>
               ))}
               {filteredTx.length === 0 && (
-                <p className="text-sm text-[var(--t2)] text-center py-6">
+                <p className="text-sm text-[var(--t2)] text-center py-8">
                   No transactions match your search.
                 </p>
               )}
@@ -252,13 +252,13 @@ export default function MoneyPage() {
 
       {/* Bills */}
       {activeTab === 'bills' && (
-        <div className="space-y-2.5">
+        <div className="space-y-3">
           {bills.map((bill) => (
             <Card key={bill.name}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-[11px] font-bold ${
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center text-[11px] font-bold ${
                       bill.paid
                         ? 'bg-[var(--posBg)] text-[var(--pos)]'
                         : 'bg-[var(--accS)] text-[var(--acc)]'
@@ -267,27 +267,27 @@ export default function MoneyPage() {
                     {bill.dueLabel}
                   </div>
                   <div>
-                    <p className="text-[13px] font-bold text-[var(--t1)]">
+                    <p className="text-[14px] font-bold text-[var(--t1)]">
                       {bill.name}
                     </p>
-                    <div className="flex items-center gap-1.5 text-[11px] text-[var(--t2)]">
+                    <div className="flex items-center gap-1.5 text-[11px] text-[var(--t2)] mt-0.5">
                       {bill.autopay && <Badge text="AUTOPAY" color="var(--acc)" />}
                       {bill.paid && <Badge text="PAID" color="var(--pos)" />}
                     </div>
                   </div>
                 </div>
-                <span className="text-[15px] font-bold font-[tabular-nums] text-[var(--t1)]">
+                <span className="text-[16px] font-bold font-[tabular-nums] text-[var(--t1)]">
                   {formatCurrency(bill.amount)}
                 </span>
               </div>
             </Card>
           ))}
           <Card variant="inner">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between py-1">
               <span className="text-[13px] font-semibold text-[var(--t2)]">
                 Total Monthly Bills
               </span>
-              <span className="text-[15px] font-bold text-[var(--t1)]">
+              <span className="text-[16px] font-bold text-[var(--t1)]">
                 {formatCurrency(bills.reduce((s, b) => s + b.amount, 0))}
               </span>
             </div>
@@ -297,19 +297,19 @@ export default function MoneyPage() {
 
       {/* Subscriptions */}
       {activeTab === 'subscriptions' && (
-        <div className="space-y-2.5">
+        <div className="space-y-3">
           {subscriptions.map((sub) => (
             <Card key={sub.name}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[var(--accS)] flex items-center justify-center">
-                    <span className="text-[12px] font-bold text-[var(--acc)]">
+                  <div className="w-10 h-10 rounded-xl bg-[var(--accS)] flex items-center justify-center">
+                    <span className="text-[13px] font-bold text-[var(--acc)]">
                       {sub.usageScore}
                     </span>
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <p className="text-[13px] font-bold text-[var(--t1)]">
+                      <p className="text-[14px] font-bold text-[var(--t1)]">
                         {sub.name}
                       </p>
                       {sub.issue && (
@@ -319,33 +319,33 @@ export default function MoneyPage() {
                         <Badge text="OK" color="var(--pos)" />
                       )}
                     </div>
-                    <p className="text-[11px] text-[var(--t2)]">
+                    <p className="text-[12px] text-[var(--t2)] mt-0.5">
                       {sub.owner} &middot; {sub.category}
                     </p>
                   </div>
                 </div>
-                <span className="text-[14px] font-bold font-[tabular-nums] text-[var(--t1)]">
+                <span className="text-[15px] font-bold font-[tabular-nums] text-[var(--t1)]">
                   ${sub.amount.toFixed(2)}/mo
                 </span>
               </div>
             </Card>
           ))}
           <Card variant="inner">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between py-1">
               <span className="text-[13px] font-semibold text-[var(--t2)]">
                 Total Monthly Subscriptions
               </span>
-              <span className="text-[15px] font-bold text-[var(--t1)]">
+              <span className="text-[16px] font-bold text-[var(--t1)]">
                 ${subTotal.toFixed(2)}/mo
               </span>
             </div>
           </Card>
           {flaggedSubs.length > 0 && (
             <Card variant="accent">
-              <p className="text-sm font-bold text-[var(--t1)] mb-2">
-                Flagged Subscriptions ({flaggedSubs.length})
-              </p>
-              <p className="text-[12px] text-[var(--t2)]">
+              <div className="nw-section-header">
+                <span>Flagged Subscriptions ({flaggedSubs.length})</span>
+              </div>
+              <p className="text-[13px] text-[var(--t2)]">
                 Potential savings of{' '}
                 <strong className="text-[var(--pos)]">
                   ${flaggedSubs.reduce((s, f) => s + f.amount, 0).toFixed(2)}/mo

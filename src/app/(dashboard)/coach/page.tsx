@@ -107,11 +107,11 @@ export default function CoachPage() {
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* ---- Hero ---- */}
       <div className="nw-hero">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
+          <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center">
             <svg
               width={22}
               height={22}
@@ -126,10 +126,10 @@ export default function CoachPage() {
             </svg>
           </div>
           <div>
-            <h1 className="text-lg font-black tracking-tight">
+            <h1 className="text-xl font-black tracking-tight">
               NestWorth Coach
             </h1>
-            <p className="text-xs opacity-80">
+            <p className="text-[13px] opacity-80">
               AI-powered financial insights for your household
             </p>
           </div>
@@ -137,17 +137,18 @@ export default function CoachPage() {
       </div>
 
       {/* ---- Layout: chat + sidebar ---- */}
-      <div className="grid lg:grid-cols-[1fr_280px] gap-4">
+      <div className="grid lg:grid-cols-[1fr_300px] gap-5">
         {/* Chat area */}
-        <div className="space-y-3">
+        <div className="space-y-5">
           {/* Quick prompts */}
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {QUICK_PROMPTS.map((prompt) => (
               <button
                 key={prompt.key}
                 type="button"
                 onClick={() => handleSend(prompt.label)}
-                className="px-3 py-2 rounded-full text-[12px] font-semibold bg-[var(--accS)] text-[var(--acc)] hover:brightness-105 active:scale-95 transition-all duration-150 min-h-[36px]"
+                className="nw-btn-pill text-[12px]"
+                style={{ minHeight: 36, padding: '0 14px' }}
               >
                 {prompt.label}
               </button>
@@ -155,20 +156,20 @@ export default function CoachPage() {
           </div>
 
           {/* Chat messages */}
-          <Card className="min-h-[300px] sm:min-h-[400px] max-h-[50vh] sm:max-h-[60vh] overflow-y-auto !p-3">
-            <div className="space-y-3" aria-live="polite">
+          <Card className="min-h-[320px] sm:min-h-[420px] max-h-[55vh] sm:max-h-[62vh] overflow-y-auto !p-4">
+            <div className="space-y-4" aria-live="polite">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`flex gap-2.5 ${
+                  className={`flex gap-3 ${
                     msg.role === 'user' ? 'flex-row-reverse' : ''
                   }`}
                 >
                   {msg.role === 'coach' ? (
-                    <div className="w-7 h-7 rounded-full bg-[var(--acc)] flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-[var(--acc)] flex items-center justify-center shrink-0 shadow-sm">
                       <svg
-                        width={14}
-                        height={14}
+                        width={15}
+                        height={15}
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="white"
@@ -180,20 +181,20 @@ export default function CoachPage() {
                       </svg>
                     </div>
                   ) : (
-                    <Avatar letter="C" size={28} color="var(--acc)" />
+                    <Avatar letter="C" size={32} color="var(--acc)" />
                   )}
                   <div
-                    className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl ${
+                    className={`max-w-[80%] px-4 py-3 rounded-2xl shadow-sm ${
                       msg.role === 'user'
                         ? 'bg-[var(--acc)] text-white rounded-br-md'
-                        : 'bg-[var(--accS)] text-[var(--t1)] rounded-bl-md'
+                        : 'nw-card-inner rounded-bl-md'
                     }`}
                   >
                     <p className="text-[13px] leading-relaxed whitespace-pre-line">
                       {msg.text}
                     </p>
                     <p
-                      className={`text-[10px] mt-1 ${
+                      className={`text-[10px] mt-1.5 ${
                         msg.role === 'user'
                           ? 'text-white/60'
                           : 'text-[var(--t3)]'
@@ -209,7 +210,7 @@ export default function CoachPage() {
           </Card>
 
           {/* Input */}
-          <div className="flex gap-2">
+          <div className="flex gap-2.5">
             <input
               type="text"
               placeholder="Ask your coach anything..."
@@ -218,14 +219,15 @@ export default function CoachPage() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               maxLength={500}
-              className="flex-1 px-4 py-3 bg-[var(--cardBg)] border border-[var(--cardBorder)] rounded-xl text-sm text-[var(--t1)] placeholder:text-[var(--t3)] outline-none focus:border-[var(--acc)] transition-colors"
+              className="nw-input flex-1"
             />
             <button
               type="button"
               onClick={() => handleSend(input)}
               disabled={!input.trim()}
               aria-label="Send message"
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl bg-[var(--acc)] text-white disabled:opacity-40 hover:brightness-110 active:scale-95 transition-all duration-150"
+              className="nw-btn disabled:opacity-40"
+              style={{ width: 50, height: 50, padding: 0 }}
             >
               <svg
                 width={18}
@@ -245,33 +247,36 @@ export default function CoachPage() {
         </div>
 
         {/* Stats sidebar */}
-        <div className="space-y-3 hidden lg:block">
+        <div className="space-y-5 hidden lg:block">
           <Card>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--t3)] mb-2">
-              Quick Stats
-            </p>
-            <div className="space-y-3">
+            <div className="nw-section-header" style={{ fontSize: 14 }}>
+              <span>Quick Stats</span>
+            </div>
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-[12px] text-[var(--t2)]">Budget Used</span>
-                <span className="text-[13px] font-bold text-[var(--t1)]">
+                <span className="text-[13px] text-[var(--t2)]">Budget Used</span>
+                <span className="text-[14px] font-bold text-[var(--t1)] font-[tabular-nums]">
                   {Math.round((totalSpent / totalBudget) * 100)}%
                 </span>
               </div>
+              <div className="nw-section-divider" />
               <div className="flex items-center justify-between">
-                <span className="text-[12px] text-[var(--t2)]">Savings Rate</span>
-                <span className="text-[13px] font-bold text-[var(--pos)]">
+                <span className="text-[13px] text-[var(--t2)]">Savings Rate</span>
+                <span className="text-[14px] font-bold text-[var(--pos)] font-[tabular-nums]">
                   {latestRate}%
                 </span>
               </div>
+              <div className="nw-section-divider" />
               <div className="flex items-center justify-between">
-                <span className="text-[12px] text-[var(--t2)]">Achievements</span>
-                <span className="text-[13px] font-bold text-[var(--t1)]">
+                <span className="text-[13px] text-[var(--t2)]">Achievements</span>
+                <span className="text-[14px] font-bold text-[var(--t1)] font-[tabular-nums]">
                   {completedAch}/{achievements.length}
                 </span>
               </div>
+              <div className="nw-section-divider" />
               <div className="flex items-center justify-between">
-                <span className="text-[12px] text-[var(--t2)]">Sync Issues</span>
-                <span className={`text-[13px] font-bold ${staleCount > 0 ? 'text-[var(--warn)]' : 'text-[var(--pos)]'}`}>
+                <span className="text-[13px] text-[var(--t2)]">Sync Issues</span>
+                <span className={`text-[14px] font-bold font-[tabular-nums] ${staleCount > 0 ? 'text-[var(--warn)]' : 'text-[var(--pos)]'}`}>
                   {staleCount}
                 </span>
               </div>
@@ -279,38 +284,40 @@ export default function CoachPage() {
           </Card>
 
           <Card variant="accent">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--t3)] mb-2">
-              Coach Tips
-            </p>
-            <div className="space-y-2 text-[12px] text-[var(--t2)]">
+            <div className="nw-section-header" style={{ fontSize: 14 }}>
+              <span>Coach Tips</span>
+            </div>
+            <div className="space-y-3 text-[13px] text-[var(--t2)] leading-relaxed">
               <p>
-                Ask about <strong>Spending</strong> to see who is spending what this week.
+                Ask about <strong className="text-[var(--t1)]">Spending</strong> to see who is spending what this week.
               </p>
               <p>
-                Ask about <strong>Bills</strong> to find savings opportunities worth $209/mo.
+                Ask about <strong className="text-[var(--t1)]">Bills</strong> to find savings opportunities worth $209/mo.
               </p>
               <p>
-                Ask about <strong>Forecast</strong> to see end-of-year projections.
+                Ask about <strong className="text-[var(--t1)]">Forecast</strong> to see end-of-year projections.
               </p>
             </div>
           </Card>
 
           <Card>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--t3)] mb-2">
-              Household
-            </p>
-            <div className="flex items-center gap-3 mb-2">
-              <Avatar letter="C" size={32} color="var(--acc)" />
-              <div>
-                <p className="text-[13px] font-bold text-[var(--t1)]">Christian</p>
-                <p className="text-[10px] text-[var(--t2)]">Primary</p>
-              </div>
+            <div className="nw-section-header" style={{ fontSize: 14 }}>
+              <span>Household</span>
             </div>
-            <div className="flex items-center gap-3">
-              <Avatar letter="Ch" size={32} color="var(--gold)" />
-              <div>
-                <p className="text-[13px] font-bold text-[var(--t1)]">Channelle</p>
-                <p className="text-[10px] text-[var(--t2)]">Partner</p>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <Avatar letter="C" size={36} color="var(--acc)" />
+                <div>
+                  <p className="text-[14px] font-bold text-[var(--t1)]">Christian</p>
+                  <p className="text-[11px] text-[var(--t2)]">Primary</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Avatar letter="Ch" size={36} color="var(--gold)" />
+                <div>
+                  <p className="text-[14px] font-bold text-[var(--t1)]">Channelle</p>
+                  <p className="text-[11px] text-[var(--t2)]">Partner</p>
+                </div>
               </div>
             </div>
           </Card>

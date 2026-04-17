@@ -59,31 +59,71 @@ const whoColor: Record<string, string> = {
   J: 'var(--info)',
 };
 
+/* Quick link configs */
+const quickLinks = [
+  {
+    label: 'ChargeIQ',
+    icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+    bg: 'rgba(255, 159, 10, 0.12)',
+    iconColor: 'var(--warn)',
+    key: 'chargeiq',
+  },
+  {
+    label: 'Bills',
+    icon: 'M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z M16 2v4 M8 2v4 M3 10h18',
+    bg: 'rgba(52, 199, 89, 0.12)',
+    iconColor: 'var(--pos)',
+    key: 'bills',
+  },
+  {
+    label: 'Goals',
+    icon: 'M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h6v2h4v-3.5c2-1.5 2-2.7 2-4.5 0-2.5-1-4-4-5z',
+    bg: 'rgba(10, 132, 255, 0.12)',
+    iconColor: 'var(--info)',
+    key: 'save',
+  },
+  {
+    label: 'Coach',
+    icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
+    bg: 'var(--accS)',
+    iconColor: 'var(--acc)',
+    key: 'coach',
+  },
+];
+
 export default function HomePage() {
   const router = useRouter();
   const setPage = useNestWorthStore((s) => s.setPage);
 
+  function handleQuickLink(key: string) {
+    if (key === 'bills') {
+      setPage('bills');
+    } else {
+      router.push(`/${key}`);
+    }
+  }
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* ---- Hero ---- */}
       <div className="nw-hero">
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="text-xs font-semibold opacity-80 mb-0.5">
+            <p className="text-[11px] font-bold uppercase tracking-wider opacity-70 mb-1">
               Household Net Worth
             </p>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-none">
               {formatCurrency(currentNW)}
             </h1>
           </div>
-          <div className="w-[80px]">
+          <div className="w-[100px] sm:w-[120px]">
             <Sparkline data={sparkData} color="rgba(255,255,255,0.85)" />
           </div>
         </div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold opacity-90">
+        <div className="inline-flex items-center gap-2 text-[13px] font-semibold bg-white/10 backdrop-blur-sm rounded-full px-3.5 py-1.5">
           <svg
-            width={10}
-            height={10}
+            width={12}
+            height={12}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -104,7 +144,7 @@ export default function HomePage() {
       </div>
 
       {/* ---- Stat cards row (computed from data) ---- */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
           label="Flex Budget"
           value={formatCurrency(flexBudget)}
@@ -132,21 +172,24 @@ export default function HomePage() {
       </div>
 
       {/* ---- Quick links ---- */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        {[
-          { label: 'ChargeIQ', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z', action: () => router.push('/chargeiq') },
-          { label: 'Bills', icon: 'M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z M16 2v4 M8 2v4 M3 10h18', action: () => setPage('bills') },
-          { label: 'Goals', icon: 'M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h6v2h4v-3.5c2-1.5 2-2.7 2-4.5 0-2.5-1-4-4-5z', action: () => router.push('/save') },
-          { label: 'Coach', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', action: () => router.push('/coach') },
-        ].map((q) => (
-          <Card key={q.label} onClick={q.action}>
-            <div className="flex flex-col items-center gap-1 py-1">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {quickLinks.map((q) => (
+          <button
+            key={q.label}
+            type="button"
+            onClick={() => handleQuickLink(q.key)}
+            className="nw-quick-link"
+          >
+            <div
+              className="nw-quick-link-icon"
+              style={{ background: q.bg }}
+            >
               <svg
-                width={20}
-                height={20}
+                width={24}
+                height={24}
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="var(--acc)"
+                stroke={q.iconColor}
                 strokeWidth={1.8}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -154,23 +197,26 @@ export default function HomePage() {
               >
                 <path d={q.icon} />
               </svg>
-              <span className="text-[11px] font-semibold text-[var(--t1)]">
-                {q.label}
-              </span>
             </div>
-          </Card>
+            <span className="text-[13px] font-semibold text-[var(--t1)]">
+              {q.label}
+            </span>
+          </button>
         ))}
       </div>
 
       {/* ---- Two-column layout ---- */}
-      <div className="grid lg:grid-cols-2 gap-4">
+      <div className="grid lg:grid-cols-[3fr_2fr] gap-5">
         {/* Left column */}
-        <div className="space-y-4">
+        <div className="space-y-5">
           {/* Spending donut */}
           <Card>
-            <p className="text-sm font-bold text-[var(--t1)] mb-3">
-              April Spending
-            </p>
+            <div className="nw-section-header">
+              <span>April Spending</span>
+              <span className="nw-view-all" onClick={() => router.push('/spend')}>
+                View All &rarr;
+              </span>
+            </div>
             <DonutChart
               segments={spendingSegments}
               centerText={formatCurrency(monthlyTotal)}
@@ -181,35 +227,38 @@ export default function HomePage() {
 
           {/* Recent transactions */}
           <Card>
-            <p className="text-sm font-bold text-[var(--t1)] mb-3">
-              Recent Transactions
-            </p>
-            <div className="space-y-0">
+            <div className="nw-section-header">
+              <span>Recent Transactions</span>
+              <span className="nw-view-all" onClick={() => router.push('/transactions')}>
+                View All &rarr;
+              </span>
+            </div>
+            <div>
               {transactions.slice(0, 8).map((tx) => (
                 <div
                   key={`${tx.who}-${tx.name}-${tx.date}`}
-                  className="flex items-center gap-3 py-2.5 border-b border-[var(--sep)] last:border-b-0"
+                  className="nw-tx-row"
                 >
                   <Avatar
                     letter={tx.who}
-                    size={28}
+                    size={36}
                     color={whoColor[tx.who] ?? 'var(--t3)'}
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
-                      <p className="text-sm font-semibold text-[var(--t1)] truncate">
+                      <p className="text-[14px] font-semibold text-[var(--t1)] truncate">
                         {tx.name}
                       </p>
                       {tx.flagged && <Badge text="FLAG" color="var(--neg)" />}
                       {tx.refund && <Badge text="REFUND" color="var(--pos)" />}
                       {tx.income && <Badge text="INCOME" color="var(--pos)" />}
                     </div>
-                    <p className="text-[11px] text-[var(--t2)]">
+                    <p className="text-[12px] text-[var(--t2)] mt-0.5">
                       {tx.category} &middot; {tx.date}
                     </p>
                   </div>
                   <span
-                    className={`text-sm font-bold font-[tabular-nums] ${
+                    className={`text-[14px] font-bold font-[tabular-nums] ${
                       tx.amount > 0
                         ? 'text-[var(--pos)]'
                         : 'text-[var(--t1)]'
@@ -224,12 +273,12 @@ export default function HomePage() {
         </div>
 
         {/* Right column */}
-        <div className="space-y-4">
+        <div className="space-y-5">
           {/* Cash flow */}
           <Card>
-            <p className="text-sm font-bold text-[var(--t1)] mb-3">
-              Cash Flow (6 mo)
-            </p>
+            <div className="nw-section-header">
+              <span>Cash Flow (6 mo)</span>
+            </div>
             <AreaChart
               data1={cfIncome}
               data2={cfExpense}
@@ -240,17 +289,17 @@ export default function HomePage() {
 
           {/* Wellness / achievements */}
           <Card>
-            <p className="text-sm font-bold text-[var(--t1)] mb-3">
-              Achievements
-            </p>
+            <div className="nw-section-header">
+              <span>Achievements</span>
+            </div>
             <div className="space-y-2">
               {achievements.slice(0, 6).map((ach) => (
                 <div
                   key={ach.name}
-                  className="flex items-center gap-2.5 py-1.5"
+                  className="nw-achievement"
                 >
                   <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[11px] ${
+                    className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-[11px] ${
                       ach.done
                         ? 'bg-[var(--pos)] text-white'
                         : 'bg-[var(--sep)] text-[var(--t3)]'
@@ -258,8 +307,8 @@ export default function HomePage() {
                   >
                     {ach.done ? (
                       <svg
-                        width={12}
-                        height={12}
+                        width={14}
+                        height={14}
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -274,15 +323,15 @@ export default function HomePage() {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[12px] font-semibold text-[var(--t1)]">
+                    <p className="text-[13px] font-semibold text-[var(--t1)]">
                       {ach.name}
                     </p>
-                    <p className="text-[10px] text-[var(--t2)]">
+                    <p className="text-[11px] text-[var(--t2)]">
                       {ach.description}
                     </p>
                   </div>
                   {ach.done && (
-                    <span className="text-[10px] font-medium text-[var(--t3)]">
+                    <span className="text-[10px] font-medium text-[var(--t3)] bg-[var(--accS)] px-2 py-0.5 rounded-md">
                       {ach.date}
                     </span>
                   )}
@@ -293,28 +342,28 @@ export default function HomePage() {
 
           {/* Top merchants */}
           <Card>
-            <p className="text-sm font-bold text-[var(--t1)] mb-3">
-              Top Merchants
-            </p>
-            <div className="space-y-0">
+            <div className="nw-section-header">
+              <span>Top Merchants</span>
+            </div>
+            <div>
               {topMerchants.slice(0, 6).map((m, i) => (
                 <div
                   key={m.n}
-                  className="flex items-center justify-between py-2 border-b border-[var(--sep)] last:border-b-0"
+                  className="nw-table-row"
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded bg-[var(--accS)] flex items-center justify-center text-[10px] font-bold text-[var(--acc)]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-7 h-7 rounded-lg bg-[var(--accS)] flex items-center justify-center text-[11px] font-bold text-[var(--acc)]">
                       {i + 1}
                     </span>
-                    <span className="text-[13px] font-semibold text-[var(--t1)]">
+                    <span className="text-[14px] font-semibold text-[var(--t1)]">
                       {m.n}
                     </span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[13px] font-bold font-[tabular-nums] text-[var(--t1)]">
+                  <div className="text-right flex items-center gap-3">
+                    <span className="text-[14px] font-bold font-[tabular-nums] text-[var(--t1)]">
                       {formatCurrency(m.total)}
                     </span>
-                    <span className="text-[10px] text-[var(--t2)] ml-1.5">
+                    <span className="text-[11px] text-[var(--t2)] bg-[var(--accS)] px-2 py-0.5 rounded-md">
                       {m.count}x
                     </span>
                   </div>

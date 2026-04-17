@@ -99,21 +99,26 @@ export default function Drawer() {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         className={cn(
-          'relative w-[280px] max-w-[85vw] h-full bg-[var(--drawerBg)] backdrop-blur-xl overflow-y-auto',
+          'relative w-[280px] max-w-[85vw] h-full overflow-y-auto',
+          'bg-[var(--drawerBg)] backdrop-blur-2xl saturate-150',
+          'border-r-[0.5px] border-[var(--barBorder)]',
           'transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
           drawerOpen ? 'translate-x-0' : '-translate-x-full',
         )}
+        style={{
+          boxShadow: drawerOpen ? '8px 0 48px rgba(0,0,0,0.12)' : 'none',
+        }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 h-14 border-b border-[var(--sep)]">
-          <span className="text-base font-bold tracking-tight text-[var(--t1)]">
+        <div className="flex items-center justify-between px-5 h-16 border-b-[0.5px] border-[var(--sep)]">
+          <span className="text-[17px] font-black tracking-tight text-[var(--t1)]">
             NestWorth
           </span>
           <button
             type="button"
             onClick={toggleDrawer}
             aria-label="Close navigation"
-            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-[var(--t2)] hover:bg-[var(--accS)] transition-colors"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-[var(--t2)] hover:bg-[var(--accS)] transition-colors"
           >
             <svg
               width={18}
@@ -132,12 +137,15 @@ export default function Drawer() {
         </div>
 
         {/* Nav sections */}
-        <nav className="py-2 px-2" aria-label="Main navigation">
-          {NAV_SECTIONS.map((section) => (
-            <div key={section.title} className="mb-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--t3)] px-2.5 mb-1">
+        <nav className="py-3 px-3" aria-label="Main navigation">
+          {NAV_SECTIONS.map((section, sectionIdx) => (
+            <div key={section.title} className="mb-2">
+              <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--t3)] px-3 mb-2 mt-3">
                 {section.title}
               </p>
+              {sectionIdx > 0 && (
+                <div className="h-[0.5px] bg-[var(--sep)] mx-2 mb-2" />
+              )}
               {section.items.map((item) => {
                 const active = isActive(item);
                 const iconPath = ICONS[item.icon] ?? '';
@@ -145,12 +153,12 @@ export default function Drawer() {
                 const content = (
                   <>
                     <svg
-                      width={18}
-                      height={18}
+                      width={20}
+                      height={20}
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth={1.8}
+                      strokeWidth={active ? 2 : 1.8}
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       aria-hidden="true"
@@ -163,9 +171,9 @@ export default function Drawer() {
                 );
 
                 const classes = cn(
-                  'flex items-center gap-2.5 w-full rounded-lg px-2.5 py-2.5 my-0.5 text-[13px] font-medium transition-all duration-150',
+                  'flex items-center gap-3 w-full rounded-xl px-3 py-3 my-0.5 text-[14px] font-medium transition-all duration-200',
                   active
-                    ? 'bg-[var(--accS)] text-[var(--acc)] font-semibold'
+                    ? 'bg-[var(--accS)] text-[var(--acc)] font-semibold shadow-sm'
                     : 'text-[var(--t2)] hover:bg-[var(--accS)] hover:text-[var(--t1)]',
                 );
 
@@ -199,6 +207,13 @@ export default function Drawer() {
             </div>
           ))}
         </nav>
+
+        {/* Footer */}
+        <div className="px-4 py-4 border-t-[0.5px] border-[var(--sep)] mt-auto">
+          <p className="text-[10px] text-[var(--t3)] font-medium text-center">
+            NestWorth v5
+          </p>
+        </div>
       </div>
     </div>
   );

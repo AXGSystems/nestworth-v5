@@ -22,7 +22,10 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-4 bg-[var(--barBg)] backdrop-blur-xl border-b border-[var(--barBorder)]" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
+    <header
+      className="sticky top-0 z-40 flex items-center justify-between h-16 px-5 bg-[var(--barBg)] backdrop-blur-2xl border-b border-[var(--barBorder)]"
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+    >
       {/* Left: hamburger (mobile) + logo */}
       <div className="flex items-center gap-3">
         {/* Hamburger — mobile only */}
@@ -30,11 +33,11 @@ export default function Header() {
           type="button"
           onClick={toggleDrawer}
           aria-label="Open navigation menu"
-          className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-[var(--t1)] hover:bg-[var(--accS)] transition-colors"
+          className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-[var(--t1)] hover:bg-[var(--accS)] transition-colors"
         >
           <svg
-            width={20}
-            height={20}
+            width={22}
+            height={22}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -48,34 +51,34 @@ export default function Header() {
           </svg>
         </button>
 
-        <span className="text-base font-bold tracking-tight text-[var(--t1)] lg:hidden">
+        <span className="text-[17px] font-black tracking-tight text-[var(--t1)] lg:hidden">
           NestWorth
         </span>
       </div>
 
       {/* Center: date */}
-      <p className="hidden sm:block text-xs font-semibold text-[var(--t2)]">
+      <p className="hidden sm:block text-[13px] font-semibold text-[var(--t2)]">
         {dateStr}
       </p>
 
       {/* Right: avatars + actions */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
         {/* Partner avatars */}
-        <div className="flex -space-x-2 mr-1">
-          <Avatar letter="C" size={28} color="var(--acc)" />
-          <Avatar letter="Ch" size={28} color="var(--gold)" />
+        <div className="flex -space-x-2 mr-2">
+          <Avatar letter="C" size={30} color="var(--acc)" />
+          <Avatar letter="Ch" size={30} color="var(--gold)" />
         </div>
 
         {/* Search */}
         <button
           type="button"
           aria-label="Search"
-          className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-lg text-[var(--t2)] hover:bg-[var(--accS)] transition-colors"
+          className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-xl text-[var(--t2)] hover:bg-[var(--accS)] hover:text-[var(--t1)] transition-all duration-150"
           onClick={() => openSheet('Search')}
         >
           <svg
-            width={18}
-            height={18}
+            width={20}
+            height={20}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -92,12 +95,12 @@ export default function Header() {
         <button
           type="button"
           aria-label="Notifications"
-          className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-lg text-[var(--t2)] hover:bg-[var(--accS)] transition-colors relative"
+          className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-xl text-[var(--t2)] hover:bg-[var(--accS)] hover:text-[var(--t1)] transition-all duration-150 relative"
           onClick={() => openSheet('Notifications')}
         >
           <svg
-            width={18}
-            height={18}
+            width={20}
+            height={20}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -109,19 +112,19 @@ export default function Header() {
             <path d="M13.73 21a2 2 0 0 1-3.46 0" />
           </svg>
           {/* Dot indicator */}
-          <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[var(--neg)]" />
+          <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-[var(--neg)] border-2 border-[var(--barBg)]" />
         </button>
 
         {/* Settings gear */}
         <button
           type="button"
           aria-label="Settings"
-          className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-lg text-[var(--t2)] hover:bg-[var(--accS)] transition-colors"
+          className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-xl text-[var(--t2)] hover:bg-[var(--accS)] hover:text-[var(--t1)] transition-all duration-150"
           onClick={() => openSheet('Settings')}
         >
           <svg
-            width={18}
-            height={18}
+            width={20}
+            height={20}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

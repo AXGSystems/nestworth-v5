@@ -10,12 +10,9 @@ interface CardProps {
 }
 
 const variantStyles: Record<string, string> = {
-  default:
-    'backdrop-blur-xl bg-[var(--cardBg)] border border-[var(--cardBorder)] rounded-2xl p-4 shadow-sm relative z-[1]',
-  accent:
-    'backdrop-blur-xl bg-[var(--cardBg)] border border-[var(--cardBorder)] border-t-2 border-t-[var(--acc)] rounded-2xl p-4 shadow-sm relative z-[1]',
-  inner:
-    'bg-[var(--accS)] border border-[var(--cardBorder)] rounded-xl p-2.5',
+  default: 'nw-card',
+  accent: 'nw-card nw-card-accent',
+  inner: 'nw-card-inner',
 };
 
 export default function Card({
@@ -27,15 +24,15 @@ export default function Card({
   const interactive = !!onClick;
   const base = variantStyles[variant];
   const interactiveStyles = interactive
-    ? 'cursor-pointer hover:bg-[var(--cardBgH)] hover:shadow-md active:scale-[0.98] active:shadow-none transition-all duration-150 ease-[cubic-bezier(0.22,1,0.36,1)]'
-    : 'transition-all duration-150 ease-[cubic-bezier(0.22,1,0.36,1)]';
+    ? 'nw-card-tap focus-visible:outline-2 focus-visible:outline-[var(--acc)] focus-visible:outline-offset-2'
+    : '';
 
   if (interactive) {
     return (
       <button
         type="button"
         onClick={onClick}
-        className={`${base} ${interactiveStyles} text-left w-full focus-visible:outline-2 focus-visible:outline-[var(--acc)] focus-visible:outline-offset-2 ${className}`}
+        className={`${base} ${interactiveStyles} text-left w-full ${className}`}
       >
         {children}
       </button>
@@ -43,7 +40,7 @@ export default function Card({
   }
 
   return (
-    <div className={`${base} ${interactiveStyles} ${className}`}>
+    <div className={`${base} ${className}`}>
       {children}
     </div>
   );

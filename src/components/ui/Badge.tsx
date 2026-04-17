@@ -10,7 +10,7 @@ interface BadgeProps {
 export default function Badge({ text, color = 'var(--acc)' }: BadgeProps) {
   return (
     <span
-      className="nw-badge-component inline-block text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wide whitespace-nowrap select-none"
+      className="nw-badge-component inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-md tracking-wide whitespace-nowrap select-none"
       style={
         {
           /* Fallback for browsers that don't support color-mix() */

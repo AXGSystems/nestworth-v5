@@ -63,48 +63,89 @@ export default function CreditPage() {
   ];
 
   return (
-    <div className="space-y-4">
-      {/* ---- Hero ---- */}
+    <div className="space-y-5">
+      {/* ---- Hero with Score Gauge ---- */}
       <div className="nw-hero">
-        <p className="text-xs font-semibold opacity-80 mb-0.5">
+        <p className="text-[11px] font-bold uppercase tracking-wider opacity-70 mb-1">
           Credit Health Score
         </p>
-        <div className="flex items-center gap-3">
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight">{latestScore}</h1>
-          <Badge
-            text={scoreLabel(latestScore)}
-            color={scoreColor(latestScore)}
-          />
-        </div>
-        <div className="flex items-center gap-1.5 mt-2 text-xs font-semibold opacity-80">
-          <span>
-            {change >= 0 ? '+' : ''}{change} pts from last check
-          </span>
+        <div className="flex items-center gap-4">
+          {/* Score gauge */}
+          <div className="relative w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] shrink-0">
+            <svg viewBox="0 0 120 120" className="w-full h-full" aria-hidden="true">
+              {/* Track */}
+              <circle
+                cx={60} cy={60} r={52}
+                fill="none"
+                stroke="rgba(255,255,255,0.12)"
+                strokeWidth={8}
+                strokeLinecap="round"
+                strokeDasharray="245.04"
+                strokeDashoffset="61.26"
+                transform="rotate(135 60 60)"
+              />
+              {/* Fill */}
+              <circle
+                cx={60} cy={60} r={52}
+                fill="none"
+                stroke="rgba(255,255,255,0.9)"
+                strokeWidth={8}
+                strokeLinecap="round"
+                strokeDasharray="245.04"
+                strokeDashoffset={245.04 - ((latestScore - 300) / 550) * 183.78 + 61.26}
+                transform="rotate(135 60 60)"
+                style={{ transition: 'stroke-dashoffset 1s ease' }}
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-2xl sm:text-3xl font-black leading-none">{latestScore}</span>
+              <span className="text-[10px] font-semibold opacity-70 mt-0.5">{scoreLabel(latestScore)}</span>
+            </div>
+          </div>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">{latestScore}</h1>
+            <Badge
+              text={scoreLabel(latestScore)}
+              color={scoreColor(latestScore)}
+            />
+            <div className="flex items-center gap-1.5 mt-2 text-[13px] font-semibold opacity-80">
+              <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" aria-hidden="true">
+                <polyline points={change >= 0 ? '18 15 12 9 6 15' : '6 9 12 15 18 9'} />
+              </svg>
+              <span>
+                {change >= 0 ? '+' : ''}{change} pts from last check
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ---- Stats ---- */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard label="Score" value={String(latestScore)} change={scoreLabel(latestScore)} trend={change >= 0 ? 'up' : 'down'} />
         <StatCard label="Utilization" value="22%" change="Good (under 30%)" trend="up" />
         <StatCard label="Accounts" value="6" change="Mix of types" trend="flat" />
         <StatCard label="Inquiries" value="1" change="Last 6 months" trend="up" />
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-4">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Score History */}
         <Card>
-          <p className="text-sm font-bold text-[var(--t1)] mb-3">Score History</p>
+          <div className="nw-section-header">
+            <span>Score History</span>
+          </div>
           <LineChart data={chartData} color={scoreColor(latestScore)} height={180} />
         </Card>
 
         {/* Add Score */}
         <Card>
-          <p className="text-sm font-bold text-[var(--t1)] mb-3">Log New Score</p>
-          <p className="text-[12px] text-[var(--t2)] mb-3">
+          <div className="nw-section-header">
+            <span>Log New Score</span>
+          </div>
+          <p className="text-[13px] text-[var(--t2)] mb-4">
             Enter your latest credit score (300-850) to track over time.
           </p>
-          <div className="flex gap-2">
+          <div className="flex gap-2.5">
             <input
               type="number"
               min={300}
@@ -113,24 +154,25 @@ export default function CreditPage() {
               aria-label="Credit score"
               value={scoreInput}
               onChange={(e) => setScoreInput(e.target.value)}
-              className="flex-1 px-4 py-3 bg-[var(--cardBg)] border border-[var(--cardBorder)] rounded-xl text-sm text-[var(--t1)] placeholder:text-[var(--t3)] outline-none focus:border-[var(--acc)] transition-colors"
+              className="nw-input flex-1"
             />
             <button
               type="button"
               onClick={handleAddScore}
               disabled={!scoreInput.trim()}
-              className="px-5 py-3 rounded-xl bg-[var(--acc)] text-white font-semibold text-sm disabled:opacity-40 hover:brightness-110 active:scale-95 transition-all duration-150"
+              className="nw-btn disabled:opacity-40"
+              style={{ height: 50, padding: '0 20px', fontSize: 14 }}
             >
               Add
             </button>
           </div>
           {creditScoreHistory.length > 0 && (
-            <div className="mt-3 space-y-1.5">
-              <p className="text-[11px] font-bold text-[var(--t3)] uppercase">Recent Entries</p>
+            <div className="mt-4 pt-4 border-t border-[var(--sep)]">
+              <p className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider mb-2">Recent Entries</p>
               {creditScoreHistory.slice(0, 5).map((h, i) => (
-                <div key={i} className="flex items-center justify-between text-[12px]">
-                  <span className="text-[var(--t2)]">{h.date}</span>
-                  <span className="font-bold text-[var(--t1)]">{h.score}</span>
+                <div key={i} className="nw-table-row" style={{ minHeight: 40, padding: '8px 0' }}>
+                  <span className="text-[13px] text-[var(--t2)]">{h.date}</span>
+                  <span className="text-[14px] font-bold text-[var(--t1)] font-[tabular-nums]">{h.score}</span>
                 </div>
               ))}
             </div>
@@ -140,18 +182,21 @@ export default function CreditPage() {
 
       {/* ---- Credit Factors ---- */}
       <Card>
-        <p className="text-sm font-bold text-[var(--t1)] mb-3">Credit Factors</p>
-        <div className="space-y-3">
+        <div className="nw-section-header">
+          <span>Credit Factors</span>
+        </div>
+        <div className="space-y-5">
           {factors.map((f) => (
             <div key={f.name}>
-              <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-[13px] font-semibold text-[var(--t1)]">{f.name}</span>
-                  <span className="text-[10px] text-[var(--t3)]">{f.weight}% weight</span>
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: f.color }} />
+                  <span className="text-[14px] font-semibold text-[var(--t1)]">{f.name}</span>
+                  <span className="text-[11px] text-[var(--t3)] bg-[var(--accS)] px-2 py-0.5 rounded-md">{f.weight}% weight</span>
                 </div>
-                <span className="text-[12px] font-bold text-[var(--t1)]">{f.pct}%</span>
+                <span className="text-[14px] font-bold text-[var(--t1)] font-[tabular-nums]">{f.pct}%</span>
               </div>
-              <ProgressBar percent={f.pct} color={f.color} height={5} />
+              <ProgressBar percent={f.pct} color={f.color} height={6} />
             </div>
           ))}
         </div>

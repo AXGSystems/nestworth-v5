@@ -56,19 +56,19 @@ const spendingTrend = monthlySpending.map((ms) => ({
 
 export default function SpendPage() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* ---- Hero ---- */}
       <div className="nw-hero">
-        <p className="text-xs font-semibold opacity-80 mb-0.5">
+        <p className="text-[11px] font-bold uppercase tracking-wider opacity-70 mb-1">
           April Budget
         </p>
-        <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-none">
           {formatCurrency(totalSpent)}{' '}
-          <span className="text-base font-semibold opacity-70">
+          <span className="text-base font-semibold opacity-60">
             of {formatCurrency(totalAllocated)}
           </span>
         </h1>
-        <div className="mt-3 bg-white/10 rounded-full h-2 overflow-hidden">
+        <div className="mt-4 bg-white/10 rounded-full h-2.5 overflow-hidden">
           <div
             className="h-full rounded-full transition-[width] duration-700"
             style={{
@@ -82,14 +82,14 @@ export default function SpendPage() {
             }}
           />
         </div>
-        <div className="flex items-center justify-between mt-2 text-xs font-semibold opacity-80">
+        <div className="flex items-center justify-between mt-2.5 text-[13px] font-semibold opacity-80">
           <span>{pctUsed}% used</span>
           <span>{formatCurrency(remaining)} remaining</span>
         </div>
       </div>
 
       {/* ---- Stat cards (computed from data) ---- */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
           label="Daily Safe Rate"
           value={`${formatCurrency(Math.round(remaining / daysLeft))}/day`}
@@ -117,13 +117,13 @@ export default function SpendPage() {
       </div>
 
       {/* ---- Two columns ---- */}
-      <div className="grid lg:grid-cols-2 gap-4">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Left: Category breakdown */}
-        <div className="space-y-4">
+        <div className="space-y-5">
           <Card>
-            <p className="text-sm font-bold text-[var(--t1)] mb-3">
-              Spending by Category
-            </p>
+            <div className="nw-section-header">
+              <span>Spending by Category</span>
+            </div>
             <DonutChart
               segments={spendSegments}
               centerText={formatCurrency(totalSpent)}
@@ -134,10 +134,10 @@ export default function SpendPage() {
 
           {/* Category list with progress bars */}
           <Card>
-            <p className="text-sm font-bold text-[var(--t1)] mb-3">
-              Category Caps
-            </p>
-            <div className="space-y-3">
+            <div className="nw-section-header">
+              <span>Category Caps</span>
+            </div>
+            <div className="space-y-4">
               {budgetCategories.map((cat, i) => {
                 const pct = Math.round((cat.spent / cat.allocated) * 100);
                 const barColor = cat.over
@@ -148,8 +148,8 @@ export default function SpendPage() {
 
                 return (
                   <div key={cat.name}>
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center gap-1.5">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-2">
                         <span className="text-[13px] font-semibold text-[var(--t1)]">
                           {cat.name}
                         </span>
@@ -167,7 +167,7 @@ export default function SpendPage() {
                         {formatCurrency(cat.spent)} / {formatCurrency(cat.allocated)}
                       </span>
                     </div>
-                    <ProgressBar percent={pct} color={barColor} height={5} />
+                    <ProgressBar percent={pct} color={barColor} height={6} />
                   </div>
                 );
               })}
@@ -176,43 +176,43 @@ export default function SpendPage() {
         </div>
 
         {/* Right: Trends */}
-        <div className="space-y-4">
+        <div className="space-y-5">
           {/* Budget vs spent history */}
           <Card>
-            <p className="text-sm font-bold text-[var(--t1)] mb-3">
-              Monthly Spend (2024)
-            </p>
+            <div className="nw-section-header">
+              <span>Monthly Spend (2024)</span>
+            </div>
             <LineChart data={budgetLineData} color="var(--acc)" height={160} />
           </Card>
 
           {/* Spending trend (6 months) */}
           <Card>
-            <p className="text-sm font-bold text-[var(--t1)] mb-3">
-              Spending Trend (6 mo)
-            </p>
+            <div className="nw-section-header">
+              <span>Spending Trend (6 mo)</span>
+            </div>
             <BarChart data={spendingTrend} height={180} />
           </Card>
 
           {/* Budget tips */}
           <Card variant="accent">
-            <p className="text-sm font-bold text-[var(--t1)] mb-2">
-              Budget Tips
-            </p>
-            <div className="space-y-2 text-[12px] text-[var(--t2)]">
-              <div className="flex items-start gap-2">
-                <span className="text-[var(--acc)] mt-0.5">1.</span>
+            <div className="nw-section-header">
+              <span>Budget Tips</span>
+            </div>
+            <div className="space-y-3 text-[13px] text-[var(--t2)]">
+              <div className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-[var(--accS)] flex items-center justify-center text-[11px] font-bold text-[var(--acc)] shrink-0 mt-0.5">1</span>
                 <p>
                   Shopping is <strong className="text-[var(--neg)]">$35 over cap</strong>. Consider pausing non-essentials.
                 </p>
               </div>
-              <div className="flex items-start gap-2">
-                <span className="text-[var(--acc)] mt-0.5">2.</span>
+              <div className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-[var(--accS)] flex items-center justify-center text-[11px] font-bold text-[var(--acc)] shrink-0 mt-0.5">2</span>
                 <p>
                   Dining Out is <strong className="text-[var(--warn)]">93% used</strong> with 12 days remaining.
                 </p>
               </div>
-              <div className="flex items-start gap-2">
-                <span className="text-[var(--acc)] mt-0.5">3.</span>
+              <div className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-[var(--accS)] flex items-center justify-center text-[11px] font-bold text-[var(--acc)] shrink-0 mt-0.5">3</span>
                 <p>
                   At current pace, you will finish April with approximately <strong className="text-[var(--pos)]">$1,000 surplus</strong>.
                 </p>

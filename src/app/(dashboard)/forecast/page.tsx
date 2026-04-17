@@ -77,23 +77,24 @@ const totalSpent = budgetCategories.reduce((a, c) => a + c.spent, 0);
 
 export default function ForecastPage() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* ---- Hero ---- */}
       <div className="nw-hero">
-        <p className="text-xs font-semibold opacity-80 mb-0.5">
+        <p className="text-[11px] font-bold uppercase tracking-wider opacity-70 mb-1">
           Cash Forecast
         </p>
-        <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-none">
           90-Day Projection
         </h1>
-        <div className="flex items-center gap-4 mt-2 text-xs font-semibold opacity-80">
+        <div className="flex items-center gap-4 mt-2 text-[13px] font-semibold opacity-80">
           <span>Current NW: {formatCurrency(currentNW)}</span>
+          <span className="w-1 h-1 rounded-full bg-white/40" />
           <span>Monthly Savings: {formatCurrency(monthlySavings)}</span>
         </div>
       </div>
 
       {/* ---- Stats ---- */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
           label="End of Q2"
           value={formatCurrency(Math.round(currentNW + monthlySavings * 2))}
@@ -120,12 +121,12 @@ export default function ForecastPage() {
         />
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-4">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Net Worth Projection */}
         <Card>
-          <p className="text-sm font-bold text-[var(--t1)] mb-3">
-            Net Worth: Actual vs Projected
-          </p>
+          <div className="nw-section-header">
+            <span>Net Worth: Actual vs Projected</span>
+          </div>
           <AreaChart
             data1={nwActual}
             data2={nwProjection}
@@ -139,9 +140,9 @@ export default function ForecastPage() {
 
         {/* Cash Flow */}
         <Card>
-          <p className="text-sm font-bold text-[var(--t1)] mb-3">
-            Cash Flow (6 mo)
-          </p>
+          <div className="nw-section-header">
+            <span>Cash Flow (6 mo)</span>
+          </div>
           <AreaChart
             data1={cfIncome}
             data2={cfExpense}
@@ -153,25 +154,25 @@ export default function ForecastPage() {
 
         {/* Monthly Net */}
         <Card>
-          <p className="text-sm font-bold text-[var(--t1)] mb-3">
-            Monthly Net (Income - Expenses)
-          </p>
+          <div className="nw-section-header">
+            <span>Monthly Net (Income - Expenses)</span>
+          </div>
           <BarChart data={monthlyNetData} height={180} />
         </Card>
 
         {/* Savings Rate */}
         <Card>
-          <p className="text-sm font-bold text-[var(--t1)] mb-3">
-            Savings Rate Trend
-          </p>
+          <div className="nw-section-header">
+            <span>Savings Rate Trend</span>
+          </div>
           <LineChart data={rateData} color="var(--pos)" height={180} />
         </Card>
 
         {/* Savings: Actual vs Projected */}
         <Card>
-          <p className="text-sm font-bold text-[var(--t1)] mb-3">
-            Savings: Actual vs Projected
-          </p>
+          <div className="nw-section-header">
+            <span>Savings: Actual vs Projected</span>
+          </div>
           <AreaChart
             data1={actualData}
             data2={projData}
@@ -185,33 +186,33 @@ export default function ForecastPage() {
 
         {/* Forecast Summary */}
         <Card variant="accent">
-          <p className="text-sm font-bold text-[var(--t1)] mb-3">
-            Forecast Summary
-          </p>
-          <div className="space-y-3 text-[12px] text-[var(--t2)]">
-            <div className="flex items-center justify-between py-1.5 border-b border-[var(--sep)]">
-              <span>Monthly Income</span>
-              <span className="font-bold text-[var(--pos)]">{formatCurrency(monthlyIncome)}</span>
+          <div className="nw-section-header">
+            <span>Forecast Summary</span>
+          </div>
+          <div className="space-y-0">
+            <div className="nw-table-row">
+              <span className="text-[13px] text-[var(--t2)]">Monthly Income</span>
+              <span className="text-[14px] font-bold text-[var(--pos)] font-[tabular-nums]">{formatCurrency(monthlyIncome)}</span>
             </div>
-            <div className="flex items-center justify-between py-1.5 border-b border-[var(--sep)]">
-              <span>Monthly Expenses</span>
-              <span className="font-bold text-[var(--neg)]">{formatCurrency(monthlyExpenses)}</span>
+            <div className="nw-table-row">
+              <span className="text-[13px] text-[var(--t2)]">Monthly Expenses</span>
+              <span className="text-[14px] font-bold text-[var(--neg)] font-[tabular-nums]">{formatCurrency(monthlyExpenses)}</span>
             </div>
-            <div className="flex items-center justify-between py-1.5 border-b border-[var(--sep)]">
-              <span>Monthly Net</span>
-              <span className="font-bold text-[var(--t1)]">{formatCurrency(monthlySavings)}</span>
+            <div className="nw-table-row">
+              <span className="text-[13px] text-[var(--t2)]">Monthly Net</span>
+              <span className="text-[14px] font-bold text-[var(--t1)] font-[tabular-nums]">{formatCurrency(monthlySavings)}</span>
             </div>
-            <div className="flex items-center justify-between py-1.5 border-b border-[var(--sep)]">
-              <span>Budget Used</span>
-              <span className="font-bold text-[var(--t1)]">{Math.round((totalSpent / totalBudget) * 100)}%</span>
+            <div className="nw-table-row">
+              <span className="text-[13px] text-[var(--t2)]">Budget Used</span>
+              <span className="text-[14px] font-bold text-[var(--t1)] font-[tabular-nums]">{Math.round((totalSpent / totalBudget) * 100)}%</span>
             </div>
-            <div className="flex items-center justify-between py-1.5">
-              <span>End of Year (projected)</span>
-              <span className="font-bold text-[var(--acc)]">{formatCurrency(eoyProjected)}</span>
+            <div className="nw-table-row">
+              <span className="text-[13px] text-[var(--t2)]">End of Year (projected)</span>
+              <span className="text-[14px] font-bold text-[var(--acc)] font-[tabular-nums]">{formatCurrency(eoyProjected)}</span>
             </div>
-            <div className="flex items-center justify-between py-1.5 bg-[var(--accS)] -mx-4 px-4 rounded-lg">
-              <span className="font-semibold">With bill audit savings</span>
-              <span className="font-bold text-[var(--pos)]">{formatCurrency(eoyWithSavings)}</span>
+            <div className="flex items-center justify-between py-3.5 bg-[var(--accS)] -mx-5 px-5 rounded-xl mt-2" style={{ minHeight: 52 }}>
+              <span className="text-[13px] font-semibold text-[var(--t1)]">With bill audit savings</span>
+              <span className="text-[14px] font-bold text-[var(--pos)] font-[tabular-nums]">{formatCurrency(eoyWithSavings)}</span>
             </div>
           </div>
         </Card>

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface ProgressBarProps {
   percent: number;
@@ -16,10 +16,21 @@ export default function ProgressBar({
   label,
 }: ProgressBarProps) {
   const clamped = Math.max(0, Math.min(100, percent));
+  const [mounted, setMounted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    /* Trigger entrance animation on mount */
+    const timer = requestAnimationFrame(() => {
+      setMounted(true);
+    });
+    return () => cancelAnimationFrame(timer);
+  }, []);
 
   return (
     <div
-      className="w-full rounded-[5px] overflow-hidden bg-[var(--sep)]"
+      ref={ref}
+      className="w-full rounded-[5px] overflow-hidden bg-[var(--accS)]"
       role="progressbar"
       aria-valuenow={clamped}
       aria-valuemin={0}
@@ -28,10 +39,11 @@ export default function ProgressBar({
       style={{ height: `${height}px` }}
     >
       <div
-        className="h-full rounded-[5px] transition-[width] duration-600 ease-[cubic-bezier(0.22,1,0.36,1)]"
+        className="h-full rounded-[5px]"
         style={{
-          width: `${clamped}%`,
+          width: mounted ? `${clamped}%` : '0%',
           background: color,
+          transition: 'width 0.8s cubic-bezier(0.22,1,0.36,1)',
         }}
       />
     </div>

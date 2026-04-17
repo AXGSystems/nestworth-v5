@@ -49,11 +49,14 @@ export default function TabBar() {
 
   return (
     <nav
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--barBg)] backdrop-blur-xl border-t border-[var(--barBorder)]"
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--barBg)] backdrop-blur-2xl saturate-150 border-t-[0.5px] border-[var(--barBorder)]"
       aria-label="Main tabs"
-      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      style={{
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+        boxShadow: '0 -4px 24px rgba(0,0,0,0.06)',
+      }}
     >
-      <div className="flex items-center justify-around h-[52px]">
+      <div className="flex items-center justify-around h-[56px]">
         {TABS.map((tab) => {
           const active = isActive(tab.href);
           return (
@@ -61,24 +64,30 @@ export default function TabBar() {
               key={tab.label}
               href={tab.href}
               className={cn(
-                'flex flex-col items-center justify-center gap-0.5 flex-1 min-h-[44px] min-w-[44px] transition-colors duration-150',
+                'flex flex-col items-center justify-center gap-1 flex-1 min-h-[44px] min-w-[44px] transition-all duration-200',
                 active ? 'text-[var(--acc)]' : 'text-[var(--t3)]',
               )}
               aria-current={active ? 'page' : undefined}
             >
-              <svg
-                width={22}
-                height={22}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={active ? 2.2 : 1.8}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d={tab.icon} />
-              </svg>
+              <div className={cn(
+                'flex items-center justify-center rounded-xl transition-all duration-200',
+                active ? 'bg-[var(--accS)] w-12 h-7' : 'w-7 h-7',
+              )}>
+                <svg
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                  fill={active ? 'var(--acc)' : 'none'}
+                  fillOpacity={active ? 0.12 : 0}
+                  stroke="currentColor"
+                  strokeWidth={active ? 2.2 : 1.8}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d={tab.icon} />
+                </svg>
+              </div>
               <span
                 className={cn(
                   'text-[10px] leading-none',
