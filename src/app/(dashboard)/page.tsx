@@ -331,7 +331,7 @@ export default function HomePage() {
                     </p>
                   </div>
                   {ach.done && (
-                    <span className="text-[10px] font-medium text-[var(--t3)] bg-[var(--accS)] px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] font-medium text-[var(--t3)] bg-[var(--accS)] px-2 py-0.5 rounded-md whitespace-nowrap shrink-0">
                       {ach.date}
                     </span>
                   )}

@@ -6,7 +6,9 @@
    Base Reset & Typography
    ============================================================ */
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -18,9 +20,9 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-    "SF Pro Text", "Inter", system-ui, sans-serif;
-  background: var(--bodyGrad);
-  color: var(--t1);
+    "SF Pro Text", "Inter", system-ui, sans-serif !important;
+  background: var(--bodyGrad) !important;
+  color: var(--t1) !important;
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
@@ -34,8 +36,6 @@ body {
 button {
   font-family: inherit;
   cursor: pointer;
-  border: none;
-  background: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   -webkit-user-select: none;
@@ -147,20 +147,24 @@ textarea::placeholder {
 
 /* ============================================================
    Glassmorphic Card System — PREMIUM
+   NOTE: !important is required because Tailwind v4 CSS layers
+   can override custom class properties when both target the
+   same element. The standard backdrop-filter property must also
+   be forced because the PostCSS pipeline strips it when only
+   the -webkit- prefix is recognized.
    ============================================================ */
 
 .nw-card {
-  background: var(--cardBg);
-  backdrop-filter: blur(20px) saturate(1.5);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  border: 0.5px solid var(--cardBorder);
+  background: var(--cardBg) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  border: 0.5px solid var(--cardBorder) !important;
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 0;
   position: relative;
   z-index: 1;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04), 0 0.5px 1px rgba(0,0,0,0.06);
-  contain: content;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0.5px 1px rgba(0,0,0,0.08) !important;
   transition:
     transform 0.18s cubic-bezier(0.22,1,0.36,1),
     box-shadow 0.18s ease,
@@ -168,12 +172,12 @@ textarea::placeholder {
 }
 
 .nw-card:hover {
-  box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06) !important;
 }
 
 .nw-card:active {
   transform: scale(0.98);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
   transition-duration: 0.08s;
 }
 
@@ -184,8 +188,8 @@ textarea::placeholder {
 }
 
 .nw-card-tap:hover {
-  background: var(--cardBgH);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  background: var(--cardBgH) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06) !important;
   transform: translateY(-1px);
 }
 
@@ -212,17 +216,17 @@ textarea::placeholder {
    ============================================================ */
 
 .nw-hero {
-  background: var(--heroGrad);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  background: var(--heroGrad) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 0.5px solid rgba(255, 255, 255, 0.12) !important;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
   color: var(--heroTxt);
   padding: 24px 22px;
   z-index: 1;
-  box-shadow: 0 8px 48px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08) !important;
 }
 
 @media (min-width: 640px) {
@@ -269,9 +273,9 @@ textarea::placeholder {
    ============================================================ */
 
 .nw-sidebar {
-  background: var(--sidebarBg);
-  backdrop-filter: blur(30px) saturate(1.5);
-  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  background: var(--sidebarBg) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(1.5) !important;
+  backdrop-filter: blur(30px) saturate(1.5) !important;
   border-right: 0.5px solid var(--barBorder);
 }
 
@@ -289,13 +293,13 @@ textarea::placeholder {
   border-radius: 14px;
   font-size: 17px;
   font-weight: 600;
-  background: var(--acc);
-  color: #fff;
+  background: var(--acc) !important;
+  color: #fff !important;
   border: none;
   transition:
     transform var(--fast) var(--spring),
     filter var(--fast) ease;
-  box-shadow: var(--shM);
+  box-shadow: var(--shM) !important;
   user-select: none;
 }
 
@@ -448,13 +452,15 @@ textarea::placeholder {
 
 .nw-section-header {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 700 !important;
   letter-spacing: -0.3px;
-  color: var(--t1);
+  color: var(--t1) !important;
   margin-bottom: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 0.5px solid var(--sep);
 }
 
 .nw-section-header .nw-view-all {
@@ -489,6 +495,13 @@ textarea::placeholder {
 .nw-stat-card {
   position: relative;
   overflow: hidden;
+  /* Stat cards inherit .nw-card glass but need visible depth */
+  border: 0.5px solid var(--cardBorder) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+
+.nw-stat-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06) !important;
 }
 
 .nw-stat-card::before {
@@ -500,7 +513,7 @@ textarea::placeholder {
   height: 100%;
   border-radius: 3px 0 0 3px;
   background: var(--stat-accent, var(--acc));
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 /* ============================================================
@@ -511,22 +524,22 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 16px 8px;
+  gap: 10px;
+  padding: 18px 10px;
   border-radius: 16px;
-  background: var(--cardBg);
-  backdrop-filter: blur(20px) saturate(1.5);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  border: 0.5px solid var(--cardBorder);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04), 0 0.5px 1px rgba(0,0,0,0.06);
+  background: var(--cardBg) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  border: 0.5px solid var(--cardBorder) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0.5px 1px rgba(0,0,0,0.08) !important;
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.22,1,0.36,1);
 }
 
 .nw-quick-link:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
-  background: var(--cardBgH);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06) !important;
+  background: var(--cardBgH) !important;
 }
 
 .nw-quick-link:active {
@@ -535,9 +548,9 @@ textarea::placeholder {
 }
 
 .nw-quick-link-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -556,10 +569,10 @@ textarea::placeholder {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 0;
+  padding: 14px 4px;
   border-bottom: 0.5px solid var(--sep);
-  transition: background 0.15s ease;
-  min-height: 56px;
+  transition: background 0.15s ease, padding 0.15s ease, margin 0.15s ease;
+  min-height: 58px;
 }
 
 .nw-tx-row:last-child {
@@ -582,10 +595,10 @@ textarea::placeholder {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 0;
+  padding: 14px 4px;
   border-bottom: 0.5px solid var(--sep);
-  transition: background 0.15s ease;
-  min-height: 52px;
+  transition: background 0.15s ease, padding 0.15s ease, margin 0.15s ease;
+  min-height: 54px;
 }
 
 .nw-table-row:last-child {
@@ -613,6 +626,8 @@ textarea::placeholder {
   background: var(--accS);
   border: 0.5px solid var(--cardBorder);
   transition: all 0.18s ease;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .nw-achievement:hover {
@@ -693,10 +708,10 @@ textarea::placeholder {
 .nw-input {
   width: 100%;
   padding: 12px 16px;
-  background: var(--cardBg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 0.5px solid var(--cardBorder);
+  background: var(--cardBg) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 0.5px solid var(--cardBorder) !important;
   border-radius: 14px;
   font-size: 14px;
   color: var(--t1);

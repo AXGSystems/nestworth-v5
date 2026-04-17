@@ -96,8 +96,8 @@ export default function Sidebar() {
               const classes = cn(
                 'flex items-center gap-3 w-full rounded-xl text-[13px] font-medium transition-all duration-200',
                 collapsed
-                  ? 'justify-center px-0 py-2.5 my-0.5'
-                  : 'px-3 py-2.5 my-0.5',
+                  ? 'justify-center px-0 py-3 my-0.5'
+                  : 'px-3 py-3 my-1',
                 active
                   ? 'bg-[var(--accS)] text-[var(--acc)] font-semibold shadow-sm'
                   : 'text-[var(--t2)] hover:bg-[var(--accS)] hover:text-[var(--t1)]',
