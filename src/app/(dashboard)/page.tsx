@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, StatCard, Avatar, Badge } from '@/components/ui';
-import { Sparkline, DonutChart, AreaChart } from '@/components/charts';
+import Link from 'next/link';
+import { Card, StatCard, Avatar, Badge, ProgressBar } from '@/components/ui';
+import { Sparkline, DonutChart, AreaChart, LineChart } from '@/components/charts';
 import {
   nwHistory,
   cashFlow,
@@ -13,33 +13,29 @@ import {
   monthlySpending,
   budgetCategories,
   savingsRateHistory,
+  bills,
 } from '@/lib/data';
 import { formatCurrency, formatCurrencyExact, trendIndicator } from '@/lib/utils';
-import { useNestWorthStore } from '@/lib/store';
 
-/* ---- Derived / computed data (Issue 11) ---- */
+/* ---- Computed data ---- */
 const currentNW = nwHistory[nwHistory.length - 1].v;
 const prevNW = nwHistory[nwHistory.length - 2].v;
 const nwTrend = trendIndicator(currentNW, prevNW);
 const sparkData = nwHistory.map((p) => p.v);
 
-/* Compute stats from data instead of hardcoding */
 const totalAllocated = budgetCategories.reduce((a, c) => a + c.allocated, 0);
 const totalSpent = budgetCategories.reduce((a, c) => a + c.spent, 0);
 const flexBudget = totalAllocated - totalSpent;
-const daysRemaining = 12; // days left in April
+const daysRemaining = 13;
 const dailySafe = Math.round(flexBudget / daysRemaining);
 
-const latestCF = cashFlow[cashFlow.length - 1];
 const savingsRate = savingsRateHistory[savingsRateHistory.length - 1].r;
 const prevSavingsRate = savingsRateHistory[savingsRateHistory.length - 2].r;
-
 const completedAch = achievements.filter((a) => a.done).length;
 
 const latestSpend = monthlySpending[monthlySpending.length - 1];
 const monthlyTotal = latestSpend.g + latestSpend.d + latestSpend.s + latestSpend.e + latestSpend.t;
 
-/* Spending by category donut */
 const spendingSegments = [
   { label: 'Groceries', value: latestSpend.g, color: 'var(--acc)' },
   { label: 'Dining', value: latestSpend.d, color: 'var(--warn)' },
@@ -48,223 +44,147 @@ const spendingSegments = [
   { label: 'Transport', value: latestSpend.t, color: 'var(--gold)' },
 ];
 
-/* Cash flow chart data */
 const cfIncome = cashFlow.map((p) => ({ label: p.m, value: p.inc }));
 const cfExpense = cashFlow.map((p) => ({ label: p.m, value: p.exp }));
+const nwChartData = nwHistory.map((p) => ({ label: p.m, value: p.v }));
 
-/* Transaction who-color map */
 const whoColor: Record<string, string> = {
   C: 'var(--acc)',
   Ch: 'var(--gold)',
   J: 'var(--info)',
 };
 
-/* Quick link configs */
-const quickLinks = [
-  {
-    label: 'ChargeIQ',
-    icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
-    bg: 'rgba(255, 159, 10, 0.12)',
-    iconColor: 'var(--warn)',
-    key: 'chargeiq',
-  },
-  {
-    label: 'Bills',
-    icon: 'M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z M16 2v4 M8 2v4 M3 10h18',
-    bg: 'rgba(52, 199, 89, 0.12)',
-    iconColor: 'var(--pos)',
-    key: 'bills',
-  },
-  {
-    label: 'Goals',
-    icon: 'M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h6v2h4v-3.5c2-1.5 2-2.7 2-4.5 0-2.5-1-4-4-5z',
-    bg: 'rgba(10, 132, 255, 0.12)',
-    iconColor: 'var(--info)',
-    key: 'save',
-  },
-  {
-    label: 'Coach',
-    icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
-    bg: 'var(--accS)',
-    iconColor: 'var(--acc)',
-    key: 'coach',
-  },
-];
+const upcomingBills = bills.filter((b) => !b.paid).slice(0, 4);
+
+/* ============================================================ */
 
 export default function HomePage() {
-  const router = useRouter();
-  const setPage = useNestWorthStore((s) => s.setPage);
-
-  function handleQuickLink(key: string) {
-    if (key === 'bills') {
-      setPage('bills');
-    } else {
-      router.push(`/${key}`);
-    }
-  }
-
   return (
-    <div className="space-y-5">
-      {/* ---- Hero ---- */}
-      <div className="nw-hero">
-        <div className="flex items-center justify-between mb-3">
+    <div className="space-y-6">
+
+      {/* ═══════ HERO — Net Worth ═══════ */}
+      <section className="nw-hero">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-wider opacity-70 mb-1">
+            <p className="text-[11px] font-bold uppercase tracking-widest opacity-60 mb-2">
               Household Net Worth
             </p>
-            <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-none">
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tighter leading-none font-[tabular-nums]">
               {formatCurrency(currentNW)}
             </h1>
-          </div>
-          <div className="w-[100px] sm:w-[120px]">
-            <Sparkline data={sparkData} color="rgba(255,255,255,0.85)" />
-          </div>
-        </div>
-        <div className="inline-flex items-center gap-2 text-[13px] font-semibold bg-white/10 backdrop-blur-sm rounded-full px-3.5 py-1.5">
-          <svg
-            width={12}
-            height={12}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={3}
-            strokeLinecap="round"
-            aria-hidden="true"
-          >
-            <polyline
-              points={nwTrend.direction === 'up' ? '18 15 12 9 6 15' : '6 9 12 15 18 9'}
-            />
-          </svg>
-          <span>
-            {nwTrend.direction === 'up' ? '+' : '-'}
-            {formatCurrency(Math.abs(currentNW - prevNW))} ({nwTrend.percent}%)
-            this month
-          </span>
-        </div>
-      </div>
-
-      {/* ---- Stat cards row (computed from data) ---- */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard
-          label="Flex Budget"
-          value={formatCurrency(flexBudget)}
-          change={`${Math.round((totalSpent / totalAllocated) * 100)}% used`}
-          trend="flat"
-        />
-        <StatCard
-          label="Spending"
-          value={formatCurrency(monthlyTotal)}
-          change={`$${dailySafe}/day safe`}
-          trend="down"
-        />
-        <StatCard
-          label="Savings Rate"
-          value={`${savingsRate}%`}
-          change={`${savingsRate > prevSavingsRate ? '+' : ''}${savingsRate - prevSavingsRate}% vs last mo`}
-          trend={savingsRate >= prevSavingsRate ? 'up' : 'down'}
-        />
-        <StatCard
-          label="Wellness"
-          value={`${completedAch}/${achievements.length}`}
-          change="Budget streak: 14d"
-          trend="up"
-        />
-      </div>
-
-      {/* ---- Quick links ---- */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {quickLinks.map((q) => (
-          <button
-            key={q.label}
-            type="button"
-            onClick={() => handleQuickLink(q.key)}
-            className="nw-quick-link"
-          >
-            <div
-              className="nw-quick-link-icon"
-              style={{ background: q.bg }}
-            >
-              <svg
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={q.iconColor}
-                strokeWidth={1.8}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d={q.icon} />
-              </svg>
-            </div>
-            <span className="text-[13px] font-semibold text-[var(--t1)]">
-              {q.label}
-            </span>
-          </button>
-        ))}
-      </div>
-
-      {/* ---- Two-column layout ---- */}
-      <div className="grid lg:grid-cols-[3fr_2fr] gap-5">
-        {/* Left column */}
-        <div className="space-y-5">
-          {/* Spending donut */}
-          <Card>
-            <div className="nw-section-header">
-              <span>April Spending</span>
-              <span className="nw-view-all" onClick={() => router.push('/spend')}>
-                View All &rarr;
+            <div className="flex items-center gap-2 mt-3">
+              <span className="inline-flex items-center gap-1.5 text-sm font-semibold bg-white/15 backdrop-blur-sm rounded-full px-3 py-1">
+                <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" aria-hidden="true">
+                  <polyline points={nwTrend.direction === 'up' ? '18 15 12 9 6 15' : '6 9 12 15 18 9'} />
+                </svg>
+                +{formatCurrency(currentNW - prevNW)} ({nwTrend.percent}%)
               </span>
+              <span className="text-xs opacity-50">this month</span>
             </div>
-            <DonutChart
-              segments={spendingSegments}
-              centerText={formatCurrency(monthlyTotal)}
-              centerSub={`of ${formatCurrency(totalAllocated)}`}
-              size={160}
-            />
+          </div>
+          <div className="w-full sm:w-[180px] h-[60px]">
+            <Sparkline data={sparkData} color="rgba(255,255,255,0.8)" height={60} />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ STAT CARDS ═══════ */}
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard label="Safe to Spend" value={formatCurrency(flexBudget)} change={`$${dailySafe}/day for ${daysRemaining} days`} trend="up" />
+        <StatCard label="Budget Spent" value={formatCurrency(totalSpent)} change={`${Math.round((totalSpent / totalAllocated) * 100)}% of ${formatCurrency(totalAllocated)}`} trend="flat" />
+        <StatCard label="Savings Rate" value={`${savingsRate}%`} change={`${savingsRate > prevSavingsRate ? '+' : ''}${savingsRate - prevSavingsRate}% vs last month`} trend={savingsRate >= prevSavingsRate ? 'up' : 'down'} />
+        <StatCard label="Achievements" value={`${completedAch} of ${achievements.length}`} change="14-day budget streak" trend="up" />
+      </section>
+
+      {/* ═══════ NET WORTH CHART — Full Width ═══════ */}
+      <section>
+        <Card>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-base font-bold text-[var(--t1)]">Net Worth Over Time</h2>
+              <p className="text-xs text-[var(--t2)] mt-0.5">12-month household trajectory</p>
+            </div>
+            <Link href="/forecast" className="text-xs font-semibold text-[var(--acc)] hover:underline">
+              Forecast →
+            </Link>
+          </div>
+          <LineChart data={nwChartData} color="var(--acc)" height={200} showArea />
+        </Card>
+      </section>
+
+      {/* ═══════ TWO-COLUMN DASHBOARD ═══════ */}
+      <section className="grid grid-cols-1 lg:grid-cols-5 gap-5">
+
+        {/* ── LEFT COLUMN (3/5) ── */}
+        <div className="lg:col-span-3 space-y-5">
+
+          {/* Spending Breakdown */}
+          <Card>
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-base font-bold text-[var(--t1)]">April Spending</h2>
+                <p className="text-xs text-[var(--t2)] mt-0.5">
+                  {formatCurrency(monthlyTotal)} of {formatCurrency(totalAllocated)} budget
+                </p>
+              </div>
+              <Link href="/spend" className="text-xs font-semibold text-[var(--acc)] hover:underline">
+                Details →
+              </Link>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
+              <DonutChart
+                segments={spendingSegments}
+                centerText={formatCurrency(monthlyTotal)}
+                centerSub="this month"
+                size={150}
+              />
+              <div className="flex-1 w-full space-y-3">
+                {budgetCategories.slice(0, 6).map((cat) => (
+                  <div key={cat.name}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[13px] font-medium text-[var(--t1)]">{cat.name}</span>
+                      <span className="text-[12px] font-bold text-[var(--t1)] font-[tabular-nums]">
+                        {formatCurrency(cat.spent)}
+                        <span className="text-[var(--t3)] font-normal"> / {formatCurrency(cat.allocated)}</span>
+                      </span>
+                    </div>
+                    <ProgressBar
+                      percent={Math.round((cat.spent / cat.allocated) * 100)}
+                      color={cat.spent > cat.allocated ? 'var(--neg)' : cat.spent / cat.allocated > 0.8 ? 'var(--warn)' : 'var(--pos)'}
+                      height={4}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </Card>
 
-          {/* Recent transactions */}
+          {/* Transactions */}
           <Card>
-            <div className="nw-section-header">
-              <span>Recent Transactions</span>
-              <span className="nw-view-all" onClick={() => router.push('/transactions')}>
-                View All &rarr;
-              </span>
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-base font-bold text-[var(--t1)]">Recent Transactions</h2>
+                <p className="text-xs text-[var(--t2)] mt-0.5">{transactions.length} transactions this month</p>
+              </div>
+              <Link href="/transactions" className="text-xs font-semibold text-[var(--acc)] hover:underline">
+                View All →
+              </Link>
             </div>
-            <div>
+            <div className="divide-y divide-[var(--sep)]">
               {transactions.slice(0, 8).map((tx) => (
-                <div
-                  key={`${tx.who}-${tx.name}-${tx.date}`}
-                  className="nw-tx-row"
-                >
-                  <Avatar
-                    letter={tx.who}
-                    size={36}
-                    color={whoColor[tx.who] ?? 'var(--t3)'}
-                  />
+                <div key={`${tx.who}-${tx.name}-${tx.date}`} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+                  <Avatar letter={tx.who} size={38} color={whoColor[tx.who] ?? 'var(--t3)'} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
-                      <p className="text-[14px] font-semibold text-[var(--t1)] truncate">
-                        {tx.name}
-                      </p>
+                      <span className="text-[13px] font-semibold text-[var(--t1)] truncate">{tx.name}</span>
                       {tx.flagged && <Badge text="FLAG" color="var(--neg)" />}
                       {tx.refund && <Badge text="REFUND" color="var(--pos)" />}
                       {tx.income && <Badge text="INCOME" color="var(--pos)" />}
                     </div>
-                    <p className="text-[12px] text-[var(--t2)] mt-0.5">
-                      {tx.category} &middot; {tx.date}
-                    </p>
+                    <span className="text-[11px] text-[var(--t2)]">{tx.category} · {tx.date}</span>
                   </div>
-                  <span
-                    className={`text-[14px] font-bold font-[tabular-nums] ${
-                      tx.amount > 0
-                        ? 'text-[var(--pos)]'
-                        : 'text-[var(--t1)]'
-                    }`}
-                  >
-                    {tx.amount > 0 ? '+' : '-'}{formatCurrencyExact(Math.abs(tx.amount))}
+                  <span className={`text-[13px] font-bold font-[tabular-nums] shrink-0 ${tx.amount > 0 ? 'text-[var(--pos)]' : 'text-[var(--t1)]'}`}>
+                    {tx.amount > 0 ? '+' : '−'}{formatCurrencyExact(Math.abs(tx.amount))}
                   </span>
                 </div>
               ))}
@@ -272,107 +192,117 @@ export default function HomePage() {
           </Card>
         </div>
 
-        {/* Right column */}
-        <div className="space-y-5">
-          {/* Cash flow */}
+        {/* ── RIGHT COLUMN (2/5) ── */}
+        <div className="lg:col-span-2 space-y-5">
+
+          {/* Cash Flow */}
           <Card>
-            <div className="nw-section-header">
-              <span>Cash Flow (6 mo)</span>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-base font-bold text-[var(--t1)]">Cash Flow</h2>
+              <span className="text-xs text-[var(--t2)]">6 months</span>
             </div>
-            <AreaChart
-              data1={cfIncome}
-              data2={cfExpense}
-              label1="Income"
-              label2="Expenses"
-            />
+            <AreaChart data1={cfIncome} data2={cfExpense} label1="Income" label2="Expenses" height={180} />
           </Card>
 
-          {/* Wellness / achievements */}
+          {/* Upcoming Bills */}
           <Card>
-            <div className="nw-section-header">
-              <span>Achievements</span>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-base font-bold text-[var(--t1)]">Upcoming Bills</h2>
+              <span className="text-xs font-semibold text-[var(--warn)]">{upcomingBills.length} due</span>
             </div>
-            <div className="space-y-2">
-              {achievements.slice(0, 6).map((ach) => (
-                <div
-                  key={ach.name}
-                  className="nw-achievement"
-                >
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-[11px] ${
-                      ach.done
-                        ? 'bg-[var(--pos)] text-white'
-                        : 'bg-[var(--sep)] text-[var(--t3)]'
-                    }`}
-                  >
-                    {ach.done ? (
-                      <svg
-                        width={14}
-                        height={14}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={3}
-                        strokeLinecap="round"
-                        aria-hidden="true"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
+            <div className="divide-y divide-[var(--sep)]">
+              {upcomingBills.map((b) => (
+                <div key={b.name} className="flex items-center justify-between py-2.5 first:pt-0 last:pb-0">
+                  <div>
+                    <p className="text-[13px] font-semibold text-[var(--t1)]">{b.name}</p>
+                    <p className="text-[11px] text-[var(--t2)]">Due the {b.dueDay}th</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[13px] font-bold font-[tabular-nums] text-[var(--t1)]">{formatCurrency(b.amount)}</p>
+                    {b.autopay ? (
+                      <Badge text="Autopay" color="var(--pos)" />
                     ) : (
-                      <span className="font-bold">{ach.progress}%</span>
+                      <Badge text="Manual" color="var(--warn)" />
                     )}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-semibold text-[var(--t1)]">
-                      {ach.name}
-                    </p>
-                    <p className="text-[11px] text-[var(--t2)]">
-                      {ach.description}
-                    </p>
-                  </div>
-                  {ach.done && (
-                    <span className="text-[10px] font-medium text-[var(--t3)] bg-[var(--accS)] px-2 py-0.5 rounded-md whitespace-nowrap shrink-0">
-                      {ach.date}
-                    </span>
-                  )}
                 </div>
               ))}
             </div>
           </Card>
 
-          {/* Top merchants */}
+          {/* Quick Actions */}
           <Card>
-            <div className="nw-section-header">
-              <span>Top Merchants</span>
+            <h2 className="text-base font-bold text-[var(--t1)] mb-3">Quick Actions</h2>
+            <div className="space-y-2">
+              <Link href="/chargeiq" className="flex items-center gap-3 p-3 rounded-xl bg-[var(--accS)] hover:bg-[color-mix(in_srgb,var(--acc)_12%,transparent)] transition-colors">
+                <div className="w-9 h-9 rounded-lg bg-[var(--warn)]/10 flex items-center justify-center shrink-0">
+                  <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="var(--warn)" strokeWidth={1.8} strokeLinecap="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13px] font-semibold text-[var(--t1)]">ChargeIQ</p>
+                  <p className="text-[11px] text-[var(--t2)]">Identify unknown charges</p>
+                </div>
+              </Link>
+              <Link href="/forecast" className="flex items-center gap-3 p-3 rounded-xl bg-[var(--accS)] hover:bg-[color-mix(in_srgb,var(--acc)_12%,transparent)] transition-colors">
+                <div className="w-9 h-9 rounded-lg bg-[var(--pos)]/10 flex items-center justify-center shrink-0">
+                  <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="var(--pos)" strokeWidth={1.8} strokeLinecap="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13px] font-semibold text-[var(--t1)]">Cash Forecast</p>
+                  <p className="text-[11px] text-[var(--t2)]">90-day projection</p>
+                </div>
+              </Link>
+              <Link href="/credit" className="flex items-center gap-3 p-3 rounded-xl bg-[var(--accS)] hover:bg-[color-mix(in_srgb,var(--acc)_12%,transparent)] transition-colors">
+                <div className="w-9 h-9 rounded-lg bg-[var(--info)]/10 flex items-center justify-center shrink-0">
+                  <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="var(--info)" strokeWidth={1.8} strokeLinecap="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13px] font-semibold text-[var(--t1)]">Credit Health</p>
+                  <p className="text-[11px] text-[var(--t2)]">Track your score</p>
+                </div>
+              </Link>
             </div>
-            <div>
-              {topMerchants.slice(0, 6).map((m, i) => (
-                <div
-                  key={m.n}
-                  className="nw-table-row"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-lg bg-[var(--accS)] flex items-center justify-center text-[11px] font-bold text-[var(--acc)]">
-                      {i + 1}
-                    </span>
-                    <span className="text-[14px] font-semibold text-[var(--t1)]">
-                      {m.n}
-                    </span>
+          </Card>
+
+          {/* Achievements */}
+          <Card>
+            <h2 className="text-base font-bold text-[var(--t1)] mb-3">Achievements</h2>
+            <div className="space-y-2.5">
+              {achievements.slice(0, 5).map((ach) => (
+                <div key={ach.name} className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold ${ach.done ? 'bg-[var(--pos)] text-white' : 'bg-[var(--sep)] text-[var(--t3)]'}`}>
+                    {ach.done ? (
+                      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                    ) : (
+                      `${ach.progress}%`
+                    )}
                   </div>
-                  <div className="text-right flex items-center gap-3">
-                    <span className="text-[14px] font-bold font-[tabular-nums] text-[var(--t1)]">
-                      {formatCurrency(m.total)}
-                    </span>
-                    <span className="text-[11px] text-[var(--t2)] bg-[var(--accS)] px-2 py-0.5 rounded-md">
-                      {m.count}x
-                    </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13px] font-semibold text-[var(--t1)]">{ach.name}</p>
+                    <p className="text-[11px] text-[var(--t2)]">{ach.description}</p>
                   </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* Top Merchants */}
+          <Card>
+            <h2 className="text-base font-bold text-[var(--t1)] mb-3">Top Merchants</h2>
+            <div className="divide-y divide-[var(--sep)]">
+              {topMerchants.slice(0, 5).map((m, i) => (
+                <div key={m.n} className="flex items-center justify-between py-2.5 first:pt-0 last:pb-0">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-md bg-[var(--accS)] flex items-center justify-center text-[10px] font-bold text-[var(--acc)]">{i + 1}</span>
+                    <span className="text-[13px] font-semibold text-[var(--t1)]">{m.n}</span>
+                  </div>
+                  <span className="text-[13px] font-bold font-[tabular-nums] text-[var(--t1)]">{formatCurrency(m.total)}</span>
                 </div>
               ))}
             </div>
           </Card>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
